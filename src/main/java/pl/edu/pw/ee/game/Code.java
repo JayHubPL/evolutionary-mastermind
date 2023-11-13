@@ -31,6 +31,13 @@ public class Code implements Iterable<Color> {
         this(variant.getCodeLength(), variant.getNumberOfColors(), variant.getDuplicateColorsAllowed());
     }
 
+    public Code(GameVariant variant, List<Color> codeSequence) {
+        this(variant);
+        for (int i = 0; i < variant.getCodeLength(); i++) {
+            this.codeSequence.set(i, codeSequence.get(i));
+        }
+    }
+
     public Score compareTo(Code other) {
         int blackPins = 0;
         int whitePins = 0;

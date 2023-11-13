@@ -23,7 +23,7 @@ public class MainFrame extends JFrame {
         setLayout(null);
         setSize(500, 500);
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setMainPanel(simulationPanel);
@@ -37,7 +37,10 @@ public class MainFrame extends JFrame {
         JMenu gameMenu = new JMenu("Gra");
         JMenuItem gameMenuItem = new JMenuItem("Gra własna");
         gameMenu.add(gameMenuItem);
-        gameMenuItem.addActionListener(e -> setMainPanel(gamePanel));
+        gameMenuItem.addActionListener(e -> {
+            setMainPanel(gamePanel);
+            gamePanel.reset();
+        });
         mainMenuBar.add(gameMenu);
 
         JMenu helpMenu = new JMenu("Pomoc");

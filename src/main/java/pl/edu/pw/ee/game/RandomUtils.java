@@ -10,7 +10,7 @@ public class RandomUtils {
     static Random random = new Random();
 
     public static Color randomColor(int colors) {
-        return new Color(random.nextInt(colors));
+        return Color.of(random.nextInt(colors));
     }
 
 }
