@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.gui;
+package pl.edu.pw.ee.gui.utils;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;

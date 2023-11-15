@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.gui;
+package pl.edu.pw.ee.gui.simulationpanel;
 
 import lombok.EqualsAndHashCode;
 import lombok.Value;

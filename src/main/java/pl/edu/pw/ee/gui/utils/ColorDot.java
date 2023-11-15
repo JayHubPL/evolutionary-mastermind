@@ -1,4 +1,6 @@
-package pl.edu.pw.ee.gui;
+package pl.edu.pw.ee.gui.utils;
+
+import pl.edu.pw.ee.gui.utils.GuiUtils;
 
 import javax.swing.*;
 import java.awt.*;

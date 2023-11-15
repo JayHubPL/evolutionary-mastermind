@@ -1,7 +1,9 @@
-package pl.edu.pw.ee.gui;
+package pl.edu.pw.ee.gui.gamepanel;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import pl.edu.pw.ee.gui.gamepanel.GamePanel;
+import pl.edu.pw.ee.gui.utils.GuiUtils;
 
 import javax.swing.*;
 import java.awt.*;

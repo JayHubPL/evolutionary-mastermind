@@ -1,21 +1,18 @@
-package pl.edu.pw.ee.gui;
+package pl.edu.pw.ee.gui.gamepanel;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.edu.pw.ee.codebreakers.PlayerCodeBreaker;
 import pl.edu.pw.ee.game.GameVariant;
 import pl.edu.pw.ee.game.Guess;
 import pl.edu.pw.ee.game.MastermindGame;
+import pl.edu.pw.ee.gui.utils.ColorDot;
+import pl.edu.pw.ee.gui.MainFrame;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 

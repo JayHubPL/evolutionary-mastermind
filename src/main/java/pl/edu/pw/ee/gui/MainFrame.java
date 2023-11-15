@@ -2,6 +2,8 @@ package pl.edu.pw.ee.gui;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import pl.edu.pw.ee.gui.gamepanel.GamePanel;
+import pl.edu.pw.ee.gui.simulationpanel.SimulationPanel;
 
 import javax.swing.*;
 import java.awt.*;
