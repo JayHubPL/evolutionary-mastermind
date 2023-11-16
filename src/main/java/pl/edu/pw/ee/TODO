@@ -1,3 +1,6 @@
-+ Dodać scroll bar do panelu z historią prób odgadnięcia
-+ Zmniejszyć odstępy między pineskami oceny, możliwe że trzeba dodać nowy panel
-+ Naprawić titledBorder wokół historii
+1. [x] Dodać scroll bar do panelu z historią prób odgadnięcia
+2. [x] Zmniejszyć odstępy między pineskami oceny, możliwe że trzeba dodać nowy panel
+3. [x] Naprawić titledBorder wokół historii
+4. [ ] Implementacja generatora populacji
+5. [ ] Implementacja podstawowych operacji AE
+6. [ ] Utworzenie interfejsu do przeprowadzenia symulacji

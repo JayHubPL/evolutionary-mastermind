@@ -1,18 +1,24 @@
 package pl.edu.pw.ee.game;
 
-import lombok.Value;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-@Value
+@EqualsAndHashCode
+@ToString
 public class Code implements Iterable<Color> {
 
-    List<Color> codeSequence;
-    Integer numberOfColors;
-    Integer length;
+    @Getter
+    private final List<Color> codeSequence;
+    @EqualsAndHashCode.Exclude
+    private final Integer numberOfColors;
+    @EqualsAndHashCode.Exclude
+    private final Integer length;
 
     public Code(int length, int colors, boolean canRepeatColors) {
         this.length = length;
