@@ -2,7 +2,6 @@ package pl.edu.pw.ee.gui.gamepanel;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import pl.edu.pw.ee.gui.gamepanel.GamePanel;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
 
 import javax.swing.*;
@@ -11,10 +10,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 @Getter
-class ColorButton extends JButton {
+public class ColorButton extends JButton {
 
-    private Integer colorIndex;
     private final int numberOfColors;
+    private Integer colorIndex;
 
     public ColorButton(int numberOfColors) {
         this.numberOfColors = numberOfColors;

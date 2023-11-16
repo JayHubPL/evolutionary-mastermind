@@ -1,48 +1,41 @@
 package pl.edu.pw.ee.gui;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import pl.edu.pw.ee.gui.gamepanel.GamePanel;
-import pl.edu.pw.ee.gui.simulationpanel.SimulationPanel;
+import pl.edu.pw.ee.gui.gamepanel.GameCard;
 
 import javax.swing.*;
 import java.awt.*;
 
-@Data
-@EqualsAndHashCode(callSuper = false)
 public class MainFrame extends JFrame {
 
-    private JPanel mainPanel;
-    private final JMenuBar mainMenuBar = new JMenuBar();
-    public static final Rectangle MAIN_PANEL_POSITION = new Rectangle(0, 0, 500, 500);
-
-    // Main panels
-    private final SimulationPanel simulationPanel = new SimulationPanel();
-    private final GamePanel gamePanel = new GamePanel();
+    private final MainPanel mainPanel;
 
     public MainFrame() {
+        mainPanel = new MainPanel();
+
         setName("Mastermind");
-        setLayout(null);
-        setSize(500, 500);
-        setLocationRelativeTo(null);
-        setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(true);
+        setLayout(new BorderLayout());
+        setSize(500, 500);
+        setBackground(Color.YELLOW); // debug
 
-        setMainPanel(simulationPanel);
-        setupMainMenu();
+        initializeMenuBar();
 
-        add(mainPanel);
+        add(mainPanel, BorderLayout.CENTER);
         setVisible(true);
     }
 
-    private void setupMainMenu() {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(MainFrame::new);
+    }
+
+    private void initializeMenuBar() {
+        JMenuBar mainMenuBar = new JMenuBar();
+
         JMenu gameMenu = new JMenu("Gra");
         JMenuItem gameMenuItem = new JMenuItem("Gra własna");
         gameMenu.add(gameMenuItem);
-        gameMenuItem.addActionListener(e -> {
-            setMainPanel(gamePanel);
-            gamePanel.reset();
-        });
+        gameMenuItem.addActionListener(e -> mainPanel.showCard(GameCard.NAME));
         mainMenuBar.add(gameMenu);
 
         JMenu helpMenu = new JMenu("Pomoc");
@@ -54,20 +47,19 @@ public class MainFrame extends JFrame {
         setJMenuBar(mainMenuBar);
     }
 
-    public void setMainPanel(JPanel newPanel) {
-        if (mainPanel != null) {
-            remove(mainPanel);
-        }
-        mainPanel = newPanel;
-        mainPanel.setBounds(MAIN_PANEL_POSITION);
-        add(mainPanel);
-        mainPanel.setVisible(true);
-        revalidate();
-        repaint();
-    }
+    static class MainPanel extends JPanel {
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(MainFrame::new);
+        MainPanel() {
+            setLayout(new CardLayout());
+            setBackground(Color.MAGENTA); // debug
+
+            add(new GameCard(), GameCard.NAME);
+        }
+
+        void showCard(String cardName) {
+            ((CardLayout) getLayout()).show(this, cardName);
+        }
+
     }
 
 }

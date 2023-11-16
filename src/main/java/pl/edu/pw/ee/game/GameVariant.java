@@ -12,21 +12,21 @@ public class GameVariant {
     Integer guessesLimit;
     Boolean duplicateColorsAllowed;
 
-    public static GameVariant classic() {
+    public static GameVariant classic(boolean duplicateColorsAllowed) {
         return GameVariant.builder()
                 .numberOfColors(6)
                 .codeLength(4)
                 .guessesLimit(12)
-                .duplicateColorsAllowed(true)
+                .duplicateColorsAllowed(duplicateColorsAllowed)
                 .build();
     }
 
-    public static GameVariant deluxe() {
+    public static GameVariant deluxe(boolean duplicateColorsAllowed) {
         return GameVariant.builder()
                 .numberOfColors(8)
                 .codeLength(5)
                 .guessesLimit(12)
-                .duplicateColorsAllowed(true)
+                .duplicateColorsAllowed(duplicateColorsAllowed)
                 .build();
     }
 
