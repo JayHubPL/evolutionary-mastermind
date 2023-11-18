@@ -9,6 +9,7 @@ public class CodeMaker {
 
     public CodeMaker(GameVariant variant) {
         secretCode = new Code(variant);
+        System.out.printf("SECRET CODE %s\n", secretCode);
     }
 
     public Guess evaluateGuess(Code guessCode) {

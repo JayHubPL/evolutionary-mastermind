@@ -1,6 +1,5 @@
 package pl.edu.pw.ee.gui.gamepanel;
 
-import pl.edu.pw.ee.codebreakers.PlayerCodeBreaker;
 import pl.edu.pw.ee.game.GameVariant;
 import pl.edu.pw.ee.game.MastermindGame;
 

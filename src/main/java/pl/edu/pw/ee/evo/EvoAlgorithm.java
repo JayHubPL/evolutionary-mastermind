@@ -5,7 +5,9 @@ import pl.edu.pw.ee.game.CodeBreaker;
 import pl.edu.pw.ee.game.MastermindGame;
 
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EvoAlgorithm implements CodeBreaker {
 
@@ -20,8 +22,11 @@ public class EvoAlgorithm implements CodeBreaker {
     @Override
     public Code makeGuess(MastermindGame gameState) {
         if (population == null) {
-            population = config.getPopulationGenerator().generatePopulation(config.getPopulationSize());
-            return evaluateAndPickBest();
+            population = config.getPopulationGenerator().generatePopulation(config.getPopulationSize(), config.isInitialPopulationDuplicatesAllowed());
+            return config.getInitialGuess();
+        }
+        if (gameState.getPreviousAttempts().size() == 1) {
+            config.getEvaluator().evaluate(population, gameState);
         }
         // select
         var selected = config.getSelector().select(population);
@@ -30,19 +35,14 @@ public class EvoAlgorithm implements CodeBreaker {
         var offsprings = parents.stream()
                 .map(pair -> config.getCrosser().cross(pair))
                 .flatMap(List::stream)
-                .toList();
+                .collect(Collectors.toCollection(LinkedList::new));
         // mutate
         offsprings.forEach(offspring -> config.getMutator().mutate(offspring));
         population = offsprings;
         // evaluate
-        return evaluateAndPickBest();
-    }
-
-    private Code evaluateAndPickBest() {
-        config.getEvaluator().evaluate(population);
+        config.getEvaluator().evaluate(population, gameState);
         population.sort(Comparator.comparing(Specimen::getFitness).reversed());
         return population.get(0);
     }
-
 
 }

@@ -2,7 +2,6 @@ package pl.edu.pw.ee.game;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 
 @EqualsAndHashCode
-@ToString
 public class Code implements Iterable<Color> {
 
     @Getter
@@ -19,6 +17,7 @@ public class Code implements Iterable<Color> {
     private final Integer numberOfColors;
     @EqualsAndHashCode.Exclude
     private final Integer length;
+    // TODO add gameVariant from Specimen here and replace the rest of fields
 
     public Code(int length, int colors, boolean canRepeatColors) {
         this.length = length;
@@ -72,6 +71,11 @@ public class Code implements Iterable<Color> {
 
     private Color getColorAt(int position) {
         return codeSequence.get(position);
+    }
+
+    @Override
+    public String toString() {
+        return codeSequence.toString();
     }
 
     @Override

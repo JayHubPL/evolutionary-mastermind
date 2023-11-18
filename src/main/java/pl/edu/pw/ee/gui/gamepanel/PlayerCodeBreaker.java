@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.codebreakers;
+package pl.edu.pw.ee.gui.gamepanel;
 
 import pl.edu.pw.ee.game.Code;
 import pl.edu.pw.ee.game.CodeBreaker;

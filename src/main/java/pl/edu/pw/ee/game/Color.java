@@ -1,10 +1,25 @@
 package pl.edu.pw.ee.game;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Value(staticConstructor = "of")
+@AllArgsConstructor
+@EqualsAndHashCode
 public class Color {
 
+    @Getter
+    @Setter
     Integer index;
+
+    public static Color of(int index) {
+        return new Color(index);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(index);
+    }
 
 }
