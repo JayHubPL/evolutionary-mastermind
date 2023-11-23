@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import pl.edu.pw.ee.game.Code;
-import pl.edu.pw.ee.game.GameVariant;
 
 @ToString(callSuper = true)
 public class Specimen extends Code {
@@ -13,8 +12,8 @@ public class Specimen extends Code {
     @Setter
     private int fitness = 0;
 
-    public Specimen(GameVariant gameVariant, Code code) {
-        super(gameVariant, code.getCodeSequence());
+    public Specimen(Code code) {
+        super(code);
     }
 
 }

@@ -2,6 +2,7 @@ package pl.edu.pw.ee.gui.gamepanel;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
 
 import javax.swing.*;
@@ -9,15 +10,17 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-@Getter
 public class ColorButton extends JButton {
 
     private final int numberOfColors;
+    @Getter
+    @Setter
     private Integer colorIndex;
 
-    public ColorButton(int numberOfColors) {
+    public ColorButton(int numberOfColors, int size) {
         this.numberOfColors = numberOfColors;
-        setPreferredSize(new Dimension(50, 50));
+        setPreferredSize(new Dimension(size, size));
+        setMinimumSize(new Dimension(size, size));
         setBorder(BorderFactory.createEmptyBorder());
         setContentAreaFilled(false);
         setBackground(Color.GRAY);

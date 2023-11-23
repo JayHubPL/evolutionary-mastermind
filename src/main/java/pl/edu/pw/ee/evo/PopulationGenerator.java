@@ -31,7 +31,7 @@ public class PopulationGenerator {
     private List<Specimen> generatePopulationWithDuplicatesAllowed(int size) {
         var population = new LinkedList<Specimen>();
         while (population.size() < size) {
-            population.add(new Specimen(gameVariant, possibleCodes.get(random.nextInt(possibleCodes.size()))));
+            population.add(new Specimen(possibleCodes.get(random.nextInt(possibleCodes.size()))));
         }
         return population;
     }
@@ -39,7 +39,7 @@ public class PopulationGenerator {
     private List<Specimen> generatePopulationWithoutDuplicates(int size) {
         return possibleCodes.stream()
                 .limit(size)
-                .map(code -> new Specimen(gameVariant, code))
+                .map(Specimen::new)
                 .toList();
     }
 

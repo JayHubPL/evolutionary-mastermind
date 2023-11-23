@@ -1,6 +1,7 @@
 package pl.edu.pw.ee.gui;
 
 import pl.edu.pw.ee.gui.gamepanel.GameCard;
+import pl.edu.pw.ee.gui.simulationpanel.SimulationPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,6 +39,12 @@ public class MainFrame extends JFrame {
         gameMenuItem.addActionListener(e -> mainPanel.showCard(GameCard.NAME));
         mainMenuBar.add(gameMenu);
 
+        JMenu simulatorManu = new JMenu("Symulator");
+        JMenuItem evoAlgorithmMenuItem = new JMenuItem("Algorytm ewolucyjny");
+        simulatorManu.add(evoAlgorithmMenuItem);
+        evoAlgorithmMenuItem.addActionListener(e -> mainPanel.showCard(SimulationPanel.NAME));
+        mainMenuBar.add(simulatorManu);
+
         JMenu helpMenu = new JMenu("Pomoc");
         JMenuItem aboutManuItem = new JMenuItem("O programie");
         helpMenu.add(aboutManuItem);
@@ -54,6 +61,7 @@ public class MainFrame extends JFrame {
             setBackground(Color.MAGENTA); // debug
 
             add(new GameCard(), GameCard.NAME);
+            add(new SimulationPanel(), SimulationPanel.NAME);
         }
 
         void showCard(String cardName) {

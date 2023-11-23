@@ -17,7 +17,7 @@ public class InputPanel extends JPanel {
         setBackground(Color.green); // debug
 
         for (int i = 0; i < gameVariant.getCodeLength(); i++) {
-            var colorButton = new ColorButton(gameVariant.getNumberOfColors());
+            var colorButton = new ColorButton(gameVariant.getNumberOfColors(), 50);
             colorButtons.add(colorButton);
             add(colorButton);
         }

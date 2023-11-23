@@ -9,38 +9,22 @@ import java.awt.*;
 public class Experimental extends JFrame {
 
     public Experimental() {
-        setLayout(new BorderLayout());
+        setLayout(new GridBagLayout());
         setResizable(true);
 
-        var topPanel = new JPanel();
-        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
-        topPanel.setBackground(Color.CYAN);
-        topPanel.setPreferredSize(new Dimension(-1, 50));
+        var button = new JButton("Hello");
 
-        var scrollPanel = new JPanel();
-        scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.Y_AXIS));
-        scrollPanel.setBackground(Color.YELLOW);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.PAGE_START;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1;
 
-        var scrollPane = new JScrollPane(scrollPanel);
-        scrollPane.setBackground(Color.MAGENTA);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setPreferredSize(new Dimension(400, 400)); // set larger preferred size
+        add(button, gbc);
+        gbc.gridy = 1;
+        add(Box.createVerticalGlue(), gbc);
 
-        var addComponentButton = new JButton("Add component");
-        addComponentButton.addActionListener(e -> {
-            scrollPanel.add(new JButton(String.valueOf(scrollPanel.getComponentCount())));
-            scrollPanel.revalidate();
-            log.debug("scrollPanel preferredSize {} {}", scrollPanel.getPreferredSize().width, scrollPanel.getPreferredSize().height);
-        });
-        topPanel.add(addComponentButton);
-
-        add(topPanel, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
         pack();
         setVisible(true);
-        log.debug("frame {} {}", getWidth(), getHeight());
-        log.debug("topPanel {} {}", topPanel.getWidth(), topPanel.getHeight());
-        log.debug("scrollPane {} {}", scrollPane.getWidth(), scrollPane.getHeight());
     }
 
 

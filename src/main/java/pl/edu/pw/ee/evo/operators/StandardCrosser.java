@@ -21,8 +21,8 @@ public class StandardCrosser implements Crosser {
         int splitIndex = random.nextInt(gameVariant.getCodeLength() - 1) + 1;
         var subSeq1 = pair.first.getCodeSequence().subList(0, splitIndex);
         var subSeq2 = pair.second.getCodeSequence().subList(splitIndex, gameVariant.getCodeLength());
-        var child1 = new Specimen(gameVariant, new Code(gameVariant, Stream.concat(subSeq1.stream(), subSeq2.stream()).toList()));
-        var child2 = new Specimen(gameVariant, new Code(gameVariant, Stream.concat(subSeq2.stream(), subSeq1.stream()).toList()));
+        var child1 = new Specimen(new Code(gameVariant, Stream.concat(subSeq1.stream(), subSeq2.stream()).toList()));
+        var child2 = new Specimen(new Code(gameVariant, Stream.concat(subSeq2.stream(), subSeq1.stream()).toList()));
         return List.of(child1, child2);
     }
 
