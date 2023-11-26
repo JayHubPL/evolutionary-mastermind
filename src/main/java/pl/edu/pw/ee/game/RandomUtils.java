@@ -13,11 +13,10 @@ public class RandomUtils {
 
     static Random random = new Random();
 
-    public static Color randomColor(int colors) {
-        return Color.of(random.nextInt(colors));
-    }
-
-    public static List<Color> randomColorsWithoutDuplicates(int size, int colors) {
+    public static List<Color> randomColors(int size, int colors, boolean duplicatesAllowed) {
+        if (duplicatesAllowed) {
+            return random.ints(size, 0, colors).mapToObj(Color::of).collect(Collectors.toList());
+        }
         var availableColors = IntStream.range(0, colors).mapToObj(Color::of).collect(Collectors.toList());
         Collections.shuffle(availableColors);
         return availableColors.subList(0, size);

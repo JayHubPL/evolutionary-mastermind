@@ -71,15 +71,9 @@ public class InputPanel extends JPanel {
     }
 
     private void randomizeInput() {
-        if (gameVariant.getDuplicateColorsAllowed()) {
-            for (var button : colorButtons) {
-                button.setColorIndex(RandomUtils.randomColor(gameVariant.getNumberOfColors()).getIndex());
-            }
-        } else {
-            var sequence = RandomUtils.randomColorsWithoutDuplicates(colorButtons.size(), gameVariant.getNumberOfColors());
-            for (int i = 0; i < colorButtons.size(); i++) {
-                colorButtons.get(i).setColorIndex(sequence.get(i).getIndex());
-            }
+        var randomColorSequence = RandomUtils.randomColors(colorButtons.size(), gameVariant.getNumberOfColors(), gameVariant.getDuplicateColorsAllowed());
+        for (int i = 0; i < colorButtons.size(); i++) {
+            colorButtons.get(i).setColorIndex(randomColorSequence.get(i).getIndex());
         }
     }
 
