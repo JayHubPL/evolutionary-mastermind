@@ -1,6 +1,15 @@
 1. [x] Dodać scroll bar do panelu z historią prób odgadnięcia
 2. [x] Zmniejszyć odstępy między pineskami oceny, możliwe że trzeba dodać nowy panel
 3. [x] Naprawić titledBorder wokół historii
-4. [ ] Implementacja generatora populacji
-5. [ ] Implementacja podstawowych operacji AE
-6. [ ] Utworzenie interfejsu do przeprowadzenia symulacji
+4. [x] Implementacja generatora populacji
+5. [x] Implementacja podstawowych operacji AE
+6. [x] Utworzenie interfejsu do przeprowadzenia symulacji
+7. [ ] Dodać zwracanie wyników symulacji
+8. [ ] Przeprowadzenie analizy wyników symulacji
+9. [ ] Interfejs z wynikami symulacji
+10. [ ] Poprawienie implementacji generatora losowego kodu w klasie Code
+11. [ ] Dodanie kolejnych parametrów do panelu konfiguracji symulatora
+12. [ ] Dodanie implementacji Knutha
+13. [ ] Refactor SimulationRunner aby obsługiwał wszyskie rodzaje algorytmów
+14. [ ] Dodanie informacji o programie
+15. [ ] Dodanie zasad gry Mastermind

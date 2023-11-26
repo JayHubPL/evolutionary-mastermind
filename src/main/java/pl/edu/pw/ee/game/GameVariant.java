@@ -30,4 +30,13 @@ public class GameVariant {
                 .build();
     }
 
+    public GameVariant withDuplicateColorsAllowed(boolean duplicateColorsAllowed) {
+        return GameVariant.builder()
+                .numberOfColors(numberOfColors)
+                .codeLength(codeLength)
+                .guessesLimit(guessesLimit)
+                .duplicateColorsAllowed(duplicateColorsAllowed)
+                .build();
+    }
+
 }

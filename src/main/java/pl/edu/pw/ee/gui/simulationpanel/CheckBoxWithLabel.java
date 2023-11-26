@@ -2,6 +2,7 @@ package pl.edu.pw.ee.gui.simulationpanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionListener;
 
 public class CheckBoxWithLabel extends JPanel {
 
@@ -21,6 +22,10 @@ public class CheckBoxWithLabel extends JPanel {
 
     public boolean isSelected() {
         return checkBox.isSelected();
+    }
+
+    public void addActionListener(ActionListener l) {
+        checkBox.addActionListener(l);
     }
 
 }

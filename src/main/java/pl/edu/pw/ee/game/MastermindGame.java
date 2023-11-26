@@ -20,9 +20,13 @@ public class MastermindGame {
     private Boolean codeBreakerWon = Boolean.FALSE;
 
     public MastermindGame(CodeBreaker codeBreaker, GameVariant variant) {
+        this(new CodeMaker(variant), codeBreaker, variant);
+    }
+
+    public MastermindGame(CodeMaker codeMaker, CodeBreaker codeBreaker, GameVariant variant) {
+        this.codeMaker = codeMaker;
         this.codeBreaker = codeBreaker;
         this.variant = variant;
-        codeMaker = new CodeMaker(variant);
     }
 
     public boolean checkIfCanGuess() {

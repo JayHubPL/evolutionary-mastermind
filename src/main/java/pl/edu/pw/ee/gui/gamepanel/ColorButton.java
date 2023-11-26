@@ -2,7 +2,6 @@ package pl.edu.pw.ee.gui.gamepanel;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
 
 import javax.swing.*;
@@ -14,7 +13,6 @@ public class ColorButton extends JButton {
 
     private final int numberOfColors;
     @Getter
-    @Setter
     private Integer colorIndex;
 
     public ColorButton(int numberOfColors, int size) {
@@ -34,6 +32,11 @@ public class ColorButton extends JButton {
                 }
             }
         });
+    }
+
+    public void setColorIndex(Integer colorIndex) {
+        this.colorIndex = colorIndex;
+        repaint();
     }
 
     private void cycleColor(Direction direction) {
@@ -59,6 +62,12 @@ public class ColorButton extends JButton {
         int centerY = getHeight() / 2;
         double distance = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
         return distance <= radius;
+    }
+
+    @Override
+    public void repaint() {
+        setBackground(colorIndex == null ? Color.GRAY : GamePanel.COLORS[colorIndex]);
+        super.repaint();
     }
 
     @Getter

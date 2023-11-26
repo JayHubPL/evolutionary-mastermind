@@ -27,7 +27,7 @@ public class Code implements Iterable<Color> {
         this(other.gameVariant, other.codeSequence);
     }
 
-    private ArrayList<Color> generateRandomCodeSequence() {
+    private ArrayList<Color> generateRandomCodeSequence() { // TODO rework using RandomUtils
         var codeSequence = new ArrayList<Color>(length());
         while (codeSequence.size() < length()) {
             Color color = RandomUtils.randomColor(numberOfColors());

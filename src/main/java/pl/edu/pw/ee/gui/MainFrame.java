@@ -17,7 +17,7 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(true);
         setLayout(new BorderLayout());
-        setSize(500, 500);
+        setSize(600, 800);
         setBackground(Color.YELLOW); // debug
 
         initializeMenuBar();
