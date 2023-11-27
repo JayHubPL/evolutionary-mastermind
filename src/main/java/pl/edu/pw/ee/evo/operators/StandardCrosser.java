@@ -2,7 +2,7 @@ package pl.edu.pw.ee.evo.operators;
 
 import lombok.RequiredArgsConstructor;
 import pl.edu.pw.ee.evo.Specimen;
-import pl.edu.pw.ee.evo.utils.Pair;
+import pl.edu.pw.ee.utils.Pair;
 import pl.edu.pw.ee.game.Code;
 import pl.edu.pw.ee.game.GameVariant;
 

@@ -9,7 +9,7 @@
 9. [ ] Interfejs z wynikami symulacji
 10. [x] Poprawienie implementacji generatora losowego kodu w klasie Code
 11. [ ] Dodanie kolejnych parametrów do panelu konfiguracji symulatora
-12. [ ] Dodanie implementacji Knutha
+12. [x] Dodanie implementacji Knutha
 13. [ ] Refactor SimulationRunner aby obsługiwał wszyskie rodzaje algorytmów
 14. [ ] Dodanie informacji o programie
 15. [ ] Dodanie zasad gry Mastermind

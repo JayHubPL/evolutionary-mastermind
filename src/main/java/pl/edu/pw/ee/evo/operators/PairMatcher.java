@@ -1,7 +1,7 @@
 package pl.edu.pw.ee.evo.operators;
 
 import pl.edu.pw.ee.evo.Specimen;
-import pl.edu.pw.ee.evo.utils.Pair;
+import pl.edu.pw.ee.utils.Pair;
 
 import java.util.List;
 

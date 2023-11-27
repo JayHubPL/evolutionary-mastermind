@@ -1,8 +1,8 @@
 package pl.edu.pw.ee.evo;
 
 import pl.edu.pw.ee.game.Code;
-import pl.edu.pw.ee.game.Color;
 import pl.edu.pw.ee.game.GameVariant;
+import pl.edu.pw.ee.utils.CodePoolGenerator;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -12,12 +12,10 @@ import java.util.Random;
 public class PopulationGenerator {
 
     private static final Random random = new Random();
-    private final GameVariant gameVariant;
-    private final List<Code> possibleCodes = new LinkedList<>();
+    private final List<Code> possibleCodes;
 
     public PopulationGenerator(GameVariant gameVariant) {
-        this.gameVariant = gameVariant;
-        initializeCodePool();
+        possibleCodes = CodePoolGenerator.generateAllPossibleCodes(gameVariant);
     }
 
     public List<Specimen> generatePopulation(int size, boolean duplicatesAllowed) {
@@ -41,26 +39,6 @@ public class PopulationGenerator {
                 .limit(size)
                 .map(Specimen::new)
                 .toList();
-    }
-
-    private void initializeCodePool() {
-        expandCombination(new LinkedList<>());
-    }
-
-    @SuppressWarnings("unchecked")
-    private void expandCombination(LinkedList<Color> prevSeq) {
-        for (int colorIndex = 0; colorIndex < gameVariant.getNumberOfColors(); colorIndex++) {
-            if (!gameVariant.getDuplicateColorsAllowed() && prevSeq.contains(Color.of(colorIndex))) {
-                continue;
-            }
-            var currSeq = (LinkedList<Color>) prevSeq.clone();
-            currSeq.add(Color.of(colorIndex));
-            if (currSeq.size() == gameVariant.getCodeLength()) {
-                possibleCodes.add(new Code(gameVariant, currSeq));
-                continue;
-            }
-            expandCombination(currSeq);
-        }
     }
 
 }

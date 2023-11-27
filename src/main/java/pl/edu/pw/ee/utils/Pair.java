@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.evo.utils;
+package pl.edu.pw.ee.utils;
 
 import lombok.Value;
 
