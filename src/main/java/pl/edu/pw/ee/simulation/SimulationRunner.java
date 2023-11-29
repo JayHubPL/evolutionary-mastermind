@@ -1,82 +1,66 @@
 package pl.edu.pw.ee.simulation;
 
 import lombok.RequiredArgsConstructor;
-import pl.edu.pw.ee.evo.EvoAlgorithm;
-import pl.edu.pw.ee.evo.EvoAlgorithmConfig;
-import pl.edu.pw.ee.evo.PopulationGenerator;
-import pl.edu.pw.ee.evo.operators.*;
-import pl.edu.pw.ee.game.Code;
-import pl.edu.pw.ee.game.CodeMaker;
-import pl.edu.pw.ee.game.MastermindGame;
+import pl.edu.pw.ee.game.*;
 import pl.edu.pw.ee.gui.utils.ProgressListener;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RequiredArgsConstructor
-public class SimulationRunner extends SwingWorker<Void, Void> {
+public abstract class SimulationRunner extends SwingWorker<SimulationStatistics, Void> {
 
     private final ProgressListener progressListener;
-    private final SimulationConfig config;
     private final Integer numberOfSimulations;
+    private final AtomicInteger finishedSimulations = new AtomicInteger();
+
+    protected abstract Simulation createSimulation();
 
     @Override
-    protected Void doInBackground() {
+    protected SimulationStatistics doInBackground() {
         ExecutorService executorService = new ThreadPoolExecutor(
                 Runtime.getRuntime().availableProcessors(),
                 Runtime.getRuntime().availableProcessors() * 2,
                 100L, TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<>());
-
-        var gameVariant = config.getGameVariant();
-        var populationGenerator = new PopulationGenerator(gameVariant);
-        var evaluator = new StandardEvaluator();
-        var selector = new UnbalancedRouletteSelector();
-        var pairMatcher = new ConsecutivePairMatcher();
-        var crosser = new StandardCrosser(gameVariant);
-        var mutator = new ColorShiftMutator(gameVariant, config.getMutationChance());
-
-        var results = new ArrayList<Future<Integer>>();
-
+        var tasks = new ArrayList<Simulation>(numberOfSimulations);
         for (int i = 0; i < numberOfSimulations; i++) {
-            var secretCode = config.getSecretCode().orElse(new Code(gameVariant));
-            var evoAlgorithmConfig = EvoAlgorithmConfig.builder()
-                    .populationSize(config.getPopulationSize())
-                    .initialGuess(config.getInitialGuess().orElse(new Code(gameVariant)))
-                    .initialPopulationDuplicatesAllowed(config.isInitialPopulationDuplicatesAllowed())
-                    .gameVariant(gameVariant)
-                    .populationGenerator(populationGenerator)
-                    .evaluator(evaluator)
-                    .selector(selector)
-                    .pairMatcher(pairMatcher)
-                    .crosser(crosser)
-                    .mutator(mutator)
-                    .build();
-            results.add(executorService.submit(() -> runSimulation(evoAlgorithmConfig, secretCode)));
+            tasks.add(createSimulation());
         }
-
-        var guessCounts = new ArrayList<Integer>();
+        var results = new ArrayList<GameResults>(numberOfSimulations);
         try {
-            for (var future : results) {
-                guessCounts.add(future.get());
-                progressListener.update((double) guessCounts.size() / numberOfSimulations);
+            for (var task : executorService.invokeAll(tasks)) {
+                results.add(task.get());
             }
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Simulation results cannot be obtained", e);
         } finally {
             executorService.shutdown();
         }
-        return null;
+        return new SimulationStatistics(results);
     }
 
-    private int runSimulation(EvoAlgorithmConfig config, Code secretCode) {
-        var evo = new EvoAlgorithm(config);
-        var game = new MastermindGame(new CodeMaker(secretCode), evo, config.getGameVariant());
-        while (game.checkIfCanGuess()) {
-            game.makeGuess();
+    @Override
+    protected void done() {
+        progressListener.notifyFinished();
+    }
+
+    @RequiredArgsConstructor
+    class Simulation implements Callable<GameResults> {
+
+        private final CodeBreaker codeBreaker;
+        private final SimulationConfig simulationConfig;
+
+        @Override
+        public GameResults call() {
+            var secretCode = simulationConfig.getSecretCode().orElse(new Code(simulationConfig.getGameVariant()));
+            var game = new MastermindGame(new CodeMaker(secretCode), codeBreaker, simulationConfig.getGameVariant());
+            var results = game.play();
+            progressListener.update((double) finishedSimulations.incrementAndGet() / numberOfSimulations);
+            return results;
         }
-        return game.getPreviousAttempts().size();
     }
 
 }

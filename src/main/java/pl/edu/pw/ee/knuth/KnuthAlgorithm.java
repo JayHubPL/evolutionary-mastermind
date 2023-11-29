@@ -1,8 +1,8 @@
 package pl.edu.pw.ee.knuth;
 
-import pl.edu.pw.ee.utils.Pair;
 import pl.edu.pw.ee.game.*;
 import pl.edu.pw.ee.utils.CodePoolGenerator;
+import pl.edu.pw.ee.utils.Pair;
 
 import java.util.Comparator;
 import java.util.HashMap;

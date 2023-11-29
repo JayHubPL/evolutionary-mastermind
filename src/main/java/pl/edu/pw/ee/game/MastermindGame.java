@@ -44,4 +44,21 @@ public class MastermindGame {
         return guess;
     }
 
+    public GameResults play() {
+        while(checkIfCanGuess()) {
+            makeGuess();
+        }
+        GameResults.GameState gameState = GameResults.GameState.NOT_FINISHED;
+        if (guessesLimitReached) {
+            gameState = GameResults.GameState.GUESS_LIMIT_REACHED;
+        } else if (codeBreakerWon) {
+            gameState = GameResults.GameState.GUESSED_SECRET_CODE;
+        }
+        return GameResults.builder()
+                .attemptHistory(previousAttempts)
+                .gameState(gameState)
+                .secretCode(codeMaker.getSecretCode())
+                .build();
+    }
+
 }

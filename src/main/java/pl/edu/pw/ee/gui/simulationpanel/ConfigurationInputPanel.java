@@ -1,10 +1,6 @@
 package pl.edu.pw.ee.gui.simulationpanel;
 
 import lombok.Getter;
-import pl.edu.pw.ee.evo.EvoAlgorithmConfig;
-import pl.edu.pw.ee.evo.PopulationGenerator;
-import pl.edu.pw.ee.evo.operators.*;
-import pl.edu.pw.ee.game.Code;
 import pl.edu.pw.ee.game.GameVariant;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
 import pl.edu.pw.ee.simulation.SimulationConfig;
@@ -12,7 +8,6 @@ import pl.edu.pw.ee.simulation.SimulationConfig;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.util.Optional;
 
 public class ConfigurationInputPanel extends JPanel {
 

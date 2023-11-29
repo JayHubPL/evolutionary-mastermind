@@ -4,4 +4,6 @@ public interface ProgressListener {
 
     void update(double progress);
 
+    default void notifyFinished() {}
+
 }
