@@ -6,13 +6,14 @@ import pl.edu.pw.ee.gui.utils.ProgressListener;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @RequiredArgsConstructor
 public abstract class SimulationRunner extends SwingWorker<SimulationStatistics, Void> {
 
-    private final ProgressListener progressListener;
+    private final List<ProgressListener> progressListeners = new ArrayList<>();
     private final Integer numberOfSimulations;
     private final AtomicInteger finishedSimulations = new AtomicInteger();
 
@@ -44,7 +45,11 @@ public abstract class SimulationRunner extends SwingWorker<SimulationStatistics,
 
     @Override
     protected void done() {
-        progressListener.notifyFinished();
+        progressListeners.forEach(ProgressListener::done);
+    }
+
+    public void addProgressListener(ProgressListener progressListener) {
+        progressListeners.add(progressListener);
     }
 
     @RequiredArgsConstructor
@@ -58,7 +63,7 @@ public abstract class SimulationRunner extends SwingWorker<SimulationStatistics,
             var secretCode = simulationConfig.getSecretCode().orElse(new Code(simulationConfig.getGameVariant()));
             var game = new MastermindGame(new CodeMaker(secretCode), codeBreaker, simulationConfig.getGameVariant());
             var results = game.play();
-            progressListener.update((double) finishedSimulations.incrementAndGet() / numberOfSimulations);
+            progressListeners.forEach(pl -> pl.update((double) finishedSimulations.incrementAndGet() / numberOfSimulations));
             return results;
         }
     }

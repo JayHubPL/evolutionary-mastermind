@@ -5,14 +5,13 @@ import pl.edu.pw.ee.evo.EvoAlgorithmConfig;
 import pl.edu.pw.ee.evo.PopulationGenerator;
 import pl.edu.pw.ee.evo.operators.*;
 import pl.edu.pw.ee.game.Code;
-import pl.edu.pw.ee.gui.utils.ProgressListener;
 
 public class EvoAlgorithmSimulationRunner extends SimulationRunner {
 
     private final SimulationConfig simulationConfig;
 
-    public EvoAlgorithmSimulationRunner(ProgressListener progressListener, int numberOfSimulations, SimulationConfig simulationConfig) {
-        super(progressListener, numberOfSimulations);
+    public EvoAlgorithmSimulationRunner(int numberOfSimulations, SimulationConfig simulationConfig) {
+        super(numberOfSimulations);
         this.simulationConfig = simulationConfig;
     }
 

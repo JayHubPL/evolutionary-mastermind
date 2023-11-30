@@ -30,7 +30,7 @@ public class ConfigurationInputPanel extends JPanel {
         secretCodeConfigPanel = new SecretCodeConfigurationPanel();
         firstGuessConfigPanel = new FirstGuessConfigurationPanel();
         evoAlgorithmConfigPanel = new EvoAlgorithmConfigurationPanel();
-        simulatorConfigPanel = new SimulatorConfigurationPanel();
+        simulatorConfigPanel = new SimulatorConfigurationPanel(this);
 
         GridBagConstraints gbc = GuiUtils.getListConstraints();
         add(gameConfigPanel, gbc);
@@ -60,9 +60,5 @@ public class ConfigurationInputPanel extends JPanel {
                 .initialPopulationDuplicatesAllowed(evoAlgorithmConfigPanel.getUniqueInitialPopulation())
                 .mutationChance(evoAlgorithmConfigPanel.getMutationChance())
                 .build();
-    }
-
-    public int getNumberOfSimulations() {
-        return simulatorConfigPanel.getNumberOfSimulations();
     }
 }
