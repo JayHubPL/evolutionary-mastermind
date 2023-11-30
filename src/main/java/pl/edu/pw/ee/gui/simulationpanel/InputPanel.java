@@ -58,6 +58,10 @@ public class InputPanel extends JPanel {
         });
     }
 
+    public boolean isInputValid() {
+        return colorButtons.stream().map(ColorButton::getColorIndex).allMatch(Objects::nonNull);
+    }
+
     public Code getInputAsCode() {
         return new Code(gameVariant, colorButtons.stream().map(ColorButton::getColorIndex).map(Color::of).collect(Collectors.toList()));
     }

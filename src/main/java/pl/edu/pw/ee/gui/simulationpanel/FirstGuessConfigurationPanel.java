@@ -42,8 +42,15 @@ public class FirstGuessConfigurationPanel extends JPanel {
         firstGuessInputPanel.update(gameVariant);
     }
 
-    public Code getInitialGuess() {
+    public boolean isInitialGuessValid() {
         if (fixedFirstGuessRadioButton.isSelected()) {
+            return firstGuessInputPanel.isInputValid();
+        }
+        return true;
+    }
+
+    public Code getInitialGuess() {
+        if (fixedFirstGuessRadioButton.isSelected() && firstGuessInputPanel.isInputValid()) {
             return firstGuessInputPanel.getInputAsCode();
         }
         return null;

@@ -42,8 +42,15 @@ public class SecretCodeConfigurationPanel extends JPanel {
         secretCodeInputPanel.update(gameVariant);
     }
 
-    public Code getSecretCode() {
+    public boolean isSecretCodeValid() {
         if (fixedSecretCodeRadioButton.isSelected()) {
+            return secretCodeInputPanel.isInputValid();
+        }
+        return true;
+    }
+
+    public Code getSecretCode() {
+        if (fixedSecretCodeRadioButton.isSelected() && secretCodeInputPanel.isInputValid()) {
             return secretCodeInputPanel.getInputAsCode();
         }
         return null;

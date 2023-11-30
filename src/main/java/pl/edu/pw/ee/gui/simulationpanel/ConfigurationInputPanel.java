@@ -51,6 +51,10 @@ public class ConfigurationInputPanel extends JPanel {
         firstGuessConfigPanel.update(gameVariant);
     }
 
+    public boolean areColorInputsValid() {
+        return firstGuessConfigPanel.isInitialGuessValid() && secretCodeConfigPanel.isSecretCodeValid();
+    }
+
     public SimulationConfig getSimulationConfig() {
         return SimulationConfig.builder()
                 .gameVariant(gameVariant)

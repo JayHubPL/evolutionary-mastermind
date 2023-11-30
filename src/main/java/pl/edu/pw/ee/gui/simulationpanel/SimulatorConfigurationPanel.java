@@ -24,6 +24,14 @@ public class SimulatorConfigurationPanel extends JPanel implements ProgressListe
         numberOfSimulationsSpinnerWithLabel = new SpinnerWithLabel("Liczba symulacji", new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
         var startSimulationButton = new JButton("Rozpocznij symulację");
         startSimulationButton.addActionListener(e -> {
+            if (!parent.areColorInputsValid()) {
+                JOptionPane.showMessageDialog(this, """
+                        Wprowadzona kombinacja początkowa lub ukryty kod nie są prawidłowe.
+                        Wybierz kolor dla każdego pola lub ustaw losowe wartości.
+                        """, "Błędne dane", JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
             var simulationProgressDialog = new SimulationProgressDialog(this);
             simulationRunner = new EvoAlgorithmSimulationRunner(getNumberOfSimulations(), parent.getSimulationConfig());
             simulationRunner.addProgressListener(simulationProgressDialog);
