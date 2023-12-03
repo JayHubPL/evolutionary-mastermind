@@ -5,7 +5,6 @@ import pl.edu.pw.ee.game.Code;
 import pl.edu.pw.ee.game.Color;
 import pl.edu.pw.ee.game.GameVariant;
 import pl.edu.pw.ee.game.MastermindGame;
-import pl.edu.pw.ee.knuth.KnuthAlgorithm;
 
 import java.util.List;
 

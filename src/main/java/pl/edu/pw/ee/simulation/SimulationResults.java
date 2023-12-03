@@ -6,15 +6,15 @@ import pl.edu.pw.ee.game.GameResults;
 import java.util.List;
 
 @Value
-public class SimulationStatistics {
+public class SimulationResults {
 
-    List<GameResults> individualSimulationResults;
+    List<GameResults> individualGameResults;
     int numberOfWins;
     int numberOfFails;
     double averageGuessCount;
 
-    public SimulationStatistics(List<GameResults> gameResults) {
-        individualSimulationResults = gameResults;
+    public SimulationResults(List<GameResults> gameResults) {
+        individualGameResults = gameResults;
         numberOfWins = (int) gameResults.stream()
                 .filter(gr -> gr.getGameState() == GameResults.GameState.GUESSED_SECRET_CODE)
                 .count();

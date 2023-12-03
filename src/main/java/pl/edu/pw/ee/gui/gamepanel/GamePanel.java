@@ -23,7 +23,7 @@ public class GamePanel extends JPanel {
         setLayout(new BorderLayout());
 
         add(new InputPanel(this, gameVariant), BorderLayout.NORTH);
-        add(new JScrollPane(guessHistoryPanel), BorderLayout.CENTER);
+        add(guessHistoryPanel, BorderLayout.CENTER);
     }
 
     public boolean makeGuess(List<Integer> colorIndexSequence) {

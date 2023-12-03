@@ -26,7 +26,7 @@ public class SimulationRunnerTest {
                 .build();
         var simulationRunner = new EvoAlgorithmSimulationRunner(1, simulationConfig);
         simulationRunner.execute();
-        simulationRunner.get().getIndividualSimulationResults().stream()
+        simulationRunner.get().getIndividualGameResults().stream()
                 .map(GameResults::getAttemptHistory)
                 .flatMap(List::stream)
                 .forEach(guess -> {

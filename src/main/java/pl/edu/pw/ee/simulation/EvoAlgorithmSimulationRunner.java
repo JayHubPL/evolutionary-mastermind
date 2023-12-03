@@ -9,10 +9,12 @@ import pl.edu.pw.ee.game.Code;
 public class EvoAlgorithmSimulationRunner extends SimulationRunner {
 
     private final SimulationConfig simulationConfig;
+    private final PopulationGenerator populationGenerator;
 
     public EvoAlgorithmSimulationRunner(int numberOfSimulations, SimulationConfig simulationConfig) {
         super(numberOfSimulations);
         this.simulationConfig = simulationConfig;
+        populationGenerator = new PopulationGenerator(simulationConfig.getGameVariant());
     }
 
     @Override
@@ -23,7 +25,7 @@ public class EvoAlgorithmSimulationRunner extends SimulationRunner {
                 .populationSize(simulationConfig.getPopulationSize())
                 .initialGuess(simulationConfig.getInitialGuess().orElse(new Code(gameVariant)))
                 .initialPopulationDuplicatesAllowed(simulationConfig.isInitialPopulationDuplicatesAllowed())
-                .populationGenerator(new PopulationGenerator(gameVariant))
+                .populationGenerator(populationGenerator)
                 .evaluator(new StandardEvaluator())
                 .selector(new UnbalancedRouletteSelector())
                 .pairMatcher(new ConsecutivePairMatcher())

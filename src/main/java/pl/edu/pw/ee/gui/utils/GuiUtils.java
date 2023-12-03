@@ -12,6 +12,7 @@ public class GuiUtils {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.weightx = 1.0;
         gbc.weighty = 0.0;
         listConstraints = gbc;

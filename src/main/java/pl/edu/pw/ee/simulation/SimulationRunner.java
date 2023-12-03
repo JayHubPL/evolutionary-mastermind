@@ -11,7 +11,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @RequiredArgsConstructor
-public abstract class SimulationRunner extends SwingWorker<SimulationStatistics, Void> {
+public abstract class SimulationRunner extends SwingWorker<SimulationResults, Void> {
 
     private final List<ProgressListener> progressListeners = new ArrayList<>();
     private final Integer numberOfSimulations;
@@ -20,7 +20,7 @@ public abstract class SimulationRunner extends SwingWorker<SimulationStatistics,
     protected abstract Simulation createSimulation();
 
     @Override
-    protected SimulationStatistics doInBackground() {
+    protected SimulationResults doInBackground() {
         var executorService = new ThreadPoolExecutor(
                 Runtime.getRuntime().availableProcessors(),
                 Runtime.getRuntime().availableProcessors() * 2,
@@ -40,7 +40,7 @@ public abstract class SimulationRunner extends SwingWorker<SimulationStatistics,
         } finally {
             executorService.shutdown();
         }
-        return new SimulationStatistics(results);
+        return new SimulationResults(results);
     }
 
     @Override

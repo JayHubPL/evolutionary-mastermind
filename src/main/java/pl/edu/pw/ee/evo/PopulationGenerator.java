@@ -15,11 +15,10 @@ public class PopulationGenerator {
     private final List<Code> possibleCodes;
 
     public PopulationGenerator(GameVariant gameVariant) {
-        possibleCodes = CodePoolGenerator.generateAllPossibleCodes(gameVariant);
+        possibleCodes = Collections.synchronizedList(CodePoolGenerator.generateAllPossibleCodes(gameVariant));
     }
 
     public List<Specimen> generatePopulation(int size, boolean duplicatesAllowed) {
-        Collections.shuffle(possibleCodes);
         if (duplicatesAllowed) {
             return generatePopulationWithDuplicatesAllowed(size);
         }
@@ -35,6 +34,7 @@ public class PopulationGenerator {
     }
 
     private List<Specimen> generatePopulationWithoutDuplicates(int size) {
+        Collections.shuffle(possibleCodes);
         return possibleCodes.stream()
                 .limit(size)
                 .map(Specimen::new)

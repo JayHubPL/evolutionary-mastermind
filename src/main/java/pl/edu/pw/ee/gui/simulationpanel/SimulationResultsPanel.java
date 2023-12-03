@@ -4,76 +4,111 @@ import lombok.SneakyThrows;
 import pl.edu.pw.ee.gui.gamepanel.GuessHistoryPanel;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
 import pl.edu.pw.ee.gui.utils.ProgressListener;
+import pl.edu.pw.ee.simulation.SimulationResults;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Vector;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.text.NumberFormat;
 
-public class SimulationResultsPanel extends JPanel implements ProgressListener, ActionListener {
+public class SimulationResultsPanel extends JPanel implements ProgressListener, ItemListener {
 
     private final SimulationPanel parent;
-    private GuessHistoryPanel guessHistoryPanel = null;
+
+    private final ValueWithLabel averageGuessCountValueWithLabel;
+    private final ValueWithLabel winPercentageValueWithLabel;
+    private final ValueWithLabel numberOfWinsValueWithLabel;
+    private final ValueWithLabel numberOfFailsValueWithLabel;
+    private final JComboBox<String> simulationsComboBox;
+    private final SecretCodePanel secretCodePanel;
+    private final GuessHistoryPanel guessHistoryPanel;
+    private final Component verticalGlue = Box.createVerticalGlue();
+
+    private SimulationResults lastSimulationResults = null;
 
     public SimulationResultsPanel(SimulationPanel parent) {
         setLayout(new GridBagLayout());
+        setBorder(new TitledBorder("Wyniki symulacji"));
         this.parent = parent;
+
+        averageGuessCountValueWithLabel = new ValueWithLabel("Średnia liczba prób odgadnięcia hasła");
+        var percentFormatter = NumberFormat.getPercentInstance();
+        percentFormatter.setMaximumFractionDigits(2);
+        winPercentageValueWithLabel = new ValueWithLabel("Procent wygranych gier", percentFormatter);
+        numberOfWinsValueWithLabel = new ValueWithLabel("Liczba wygranych gier");
+        numberOfFailsValueWithLabel = new ValueWithLabel("Liczba przegranych gier");
+
+        simulationsComboBox = new JComboBox<>();
+        simulationsComboBox.setBorder(new EmptyBorder(5, 5, 5, 5));
+        simulationsComboBox.addItemListener(this);
+        simulationsComboBox.setVisible(false);
+
+        secretCodePanel = new SecretCodePanel();
+        secretCodePanel.setVisible(false);
+
+        guessHistoryPanel = new GuessHistoryPanel();
+        guessHistoryPanel.setVisible(false);
+
+        var gbc = GuiUtils.getListConstraints();
+        add(averageGuessCountValueWithLabel, gbc);
+        add(winPercentageValueWithLabel, gbc);
+        add(numberOfWinsValueWithLabel, gbc);
+        add(numberOfFailsValueWithLabel, gbc);
+        add(simulationsComboBox, gbc);
+        add(secretCodePanel, gbc);
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 1.0;
+        add(guessHistoryPanel, gbc);
+        add(verticalGlue, gbc);
     }
 
     @Override
     @SneakyThrows
     public void done() {
-        removeAll();
+        lastSimulationResults = parent.getConfigurationInputPanel().getSimulatorConfigPanel().getSimulationRunner().get();
+        var numberOfSimulations = lastSimulationResults.getIndividualGameResults().size();
 
-        var simulationStatistics = parent.getConfigurationInputPanel().getSimulatorConfigPanel().getSimulationRunner().get();
-        var numberOfSimulations = simulationStatistics.getIndividualSimulationResults().size();
-        var averageGuessCountLabel = new JLabel(String.format("Średnia liczba prób odgadnięcia hasła: %.2f", simulationStatistics.getAverageGuessCount()));
-        var winPercentageLabel = new JLabel(String.format("Procent wygranych gier: %.2f%%", (double) simulationStatistics.getNumberOfWins() * 100 / numberOfSimulations));
-        var numberOfWinsLabel = new JLabel(String.format("Liczba wygranych gier: %d", simulationStatistics.getNumberOfWins()));
-        var numberOfFailsLabel = new JLabel(String.format("Liczba przegranych gier: %d", simulationStatistics.getNumberOfFails()));
+        averageGuessCountValueWithLabel.setValue(lastSimulationResults.getAverageGuessCount());
+        winPercentageValueWithLabel.setValue((double) lastSimulationResults.getNumberOfWins() / numberOfSimulations);
+        numberOfWinsValueWithLabel.setValue(lastSimulationResults.getNumberOfWins());
+        numberOfFailsValueWithLabel.setValue(lastSimulationResults.getNumberOfFails());
 
-        var simulationComboBoxStrings = new Vector<String>();
+        simulationsComboBox.removeAllItems();
         for (int i = 0; i < numberOfSimulations; i++) {
-            var gameResults = simulationStatistics.getIndividualSimulationResults().get(i);
+            var gameResults = lastSimulationResults.getIndividualGameResults().get(i);
             var attemptDeclinationString = switch (gameResults.getNumberOfAttempts()) {
                 case 1 -> "próba";
                 case 2 | 3 | 4 -> "próby";
                 default -> "prób";
             };
-            simulationComboBoxStrings.add(String.format("Symulacja #%d: %d %s", i + 1, gameResults.getNumberOfAttempts(), attemptDeclinationString));
+            simulationsComboBox.addItem(String.format("Symulacja #%d: %d %s", i + 1, gameResults.getNumberOfAttempts(), attemptDeclinationString));
         }
-
-        var simulationsComboBox = new JComboBox<>(simulationComboBoxStrings);
-        simulationsComboBox.addActionListener(this);
-
-        add(averageGuessCountLabel, GuiUtils.getListConstraints());
-        add(winPercentageLabel, GuiUtils.getListConstraints());
-        add(numberOfWinsLabel, GuiUtils.getListConstraints());
-        add(numberOfFailsLabel, GuiUtils.getListConstraints());
-        add(simulationsComboBox, GuiUtils.getListConstraints());
+        simulationsComboBox.setVisible(true);
 
         GuiUtils.revalidateAndRepaintLater(this);
     }
 
     @Override
-    @SneakyThrows
     @SuppressWarnings("unchecked")
-    public void actionPerformed(ActionEvent e) {
-        if (guessHistoryPanel != null) {
-            remove(guessHistoryPanel);
+    public void itemStateChanged(ItemEvent e) {
+        if (lastSimulationResults == null || e.getStateChange() != ItemEvent.SELECTED) {
+            return;
         }
 
         var simulationIndex = ((JComboBox<String>) e.getSource()).getSelectedIndex();
-        var gameResults = parent.getConfigurationInputPanel().getSimulatorConfigPanel().getSimulationRunner().get()
-                .getIndividualSimulationResults().get(simulationIndex);
-
-        guessHistoryPanel = new GuessHistoryPanel();
+        var gameResults = lastSimulationResults.getIndividualGameResults().get(simulationIndex);
+        guessHistoryPanel.clear();
         for (var guess : gameResults.getAttemptHistory()) {
             guessHistoryPanel.addGuess(guess);
         }
+        guessHistoryPanel.setVisible(true);
+        secretCodePanel.setSecretCode(gameResults.getSecretCode());
+        secretCodePanel.setVisible(true);
+        remove(verticalGlue);
 
-        add(guessHistoryPanel, GuiUtils.getListConstraints());
         GuiUtils.revalidateAndRepaintLater(this);
     }
 

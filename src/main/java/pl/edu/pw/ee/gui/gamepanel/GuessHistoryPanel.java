@@ -9,14 +9,32 @@ import java.awt.*;
 
 public class GuessHistoryPanel extends JPanel {
 
+    private final JPanel guessesPanel;
+    private final JScrollPane scrollPane;
+
     public GuessHistoryPanel() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BorderLayout());
         setBorder(new TitledBorder("Próby odgadnięcia hasła"));
+
+        guessesPanel = new JPanel();
+        guessesPanel.setLayout(new BoxLayout(guessesPanel, BoxLayout.Y_AXIS));
+
+        scrollPane = new JScrollPane(guessesPanel);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.getHorizontalScrollBar().setUnitIncrement(16);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     public void addGuess(Guess guess) {
-        add(new GuessHistoryRecordPanel(guess));
+        guessesPanel.add(new GuessHistoryRecordPanel(guess));
+        scrollPane.setPreferredSize(guessesPanel.getPreferredSize());
         revalidate();
+    }
+
+    public void clear() {
+        guessesPanel.removeAll();
     }
 
     static class GuessHistoryRecordPanel extends JPanel {

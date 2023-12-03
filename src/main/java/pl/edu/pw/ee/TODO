@@ -4,12 +4,16 @@
 4. [x] Implementacja generatora populacji
 5. [x] Implementacja podstawowych operacji AE
 6. [x] Utworzenie interfejsu do przeprowadzenia symulacji
-7. [ ] Dodać zwracanie wyników symulacji
-8. [ ] Przeprowadzenie analizy wyników symulacji
-9. [ ] Interfejs z wynikami symulacji
+7. [x] Dodać zwracanie wyników symulacji
+8. [x] Przeprowadzenie analizy wyników symulacji
+9. [x] Interfejs z wynikami symulacji
 10. [x] Poprawienie implementacji generatora losowego kodu w klasie Code
 11. [ ] Dodanie kolejnych parametrów do panelu konfiguracji symulatora
 12. [x] Dodanie implementacji Knutha
 13. [ ] Refactor SimulationRunner aby obsługiwał wszyskie rodzaje algorytmów
 14. [ ] Dodanie informacji o programie
 15. [ ] Dodanie zasad gry Mastermind
+16. [ ] Eksperymenty z przyspieszeniem wielowątkowowych operacji
+17. [ ] Dodanie możlwiości eksportowania wyników i parametrów symulacji do JSON/CSV
+18. [ ] Dodanie panelu dla Knutha
+19. [ ] Refactor paneli z konfiguracją i wynikami symulacji aby działay dla każdego typu algorytmu
