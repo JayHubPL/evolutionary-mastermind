@@ -11,7 +11,7 @@ public class Color {
 
     @Getter
     @Setter
-    Integer index;
+    private Integer index;
 
     public static Color of(int index) {
         return new Color(index);

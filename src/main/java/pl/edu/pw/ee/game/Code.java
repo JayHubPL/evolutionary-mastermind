@@ -15,7 +15,7 @@ public class Code implements Iterable<Color> {
     @EqualsAndHashCode.Exclude
     private final GameVariant gameVariant;
     @Getter
-    private final List<Color> codeSequence;
+    protected final List<Color> codeSequence;
 
     public Code(GameVariant gameVariant) {
         this.gameVariant = gameVariant;
@@ -23,7 +23,8 @@ public class Code implements Iterable<Color> {
     }
 
     public Code(Code other) {
-        this(other.gameVariant, other.codeSequence);
+        gameVariant = other.gameVariant;
+        codeSequence = other.codeSequence.stream().map(color -> Color.of(color.getIndex())).toList();
     }
 
     private int length() {

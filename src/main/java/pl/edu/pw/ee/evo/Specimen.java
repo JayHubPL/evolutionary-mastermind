@@ -2,10 +2,8 @@ package pl.edu.pw.ee.evo;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import pl.edu.pw.ee.game.Code;
 
-@ToString(callSuper = true)
 public class Specimen extends Code {
 
     @Getter
@@ -16,4 +14,8 @@ public class Specimen extends Code {
         super(code);
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s, fitness=%d", codeSequence, fitness);
+    }
 }

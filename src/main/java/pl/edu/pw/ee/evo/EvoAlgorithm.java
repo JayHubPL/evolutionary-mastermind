@@ -42,7 +42,7 @@ public class EvoAlgorithm implements CodeBreaker {
         // evaluate
         config.getEvaluator().evaluate(population, gameState);
         population.sort(Comparator.comparing(Specimen::getFitness).reversed());
-        return population.get(0);
+        return new Code(population.get(0));
     }
 
 }

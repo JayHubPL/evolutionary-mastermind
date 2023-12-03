@@ -12,7 +12,6 @@ public class GuessHistoryPanel extends JPanel {
     public GuessHistoryPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new TitledBorder("Próby odgadnięcia hasła"));
-        setBackground(Color.magenta); // debug
     }
 
     public void addGuess(Guess guess) {
@@ -24,7 +23,6 @@ public class GuessHistoryPanel extends JPanel {
 
         public GuessHistoryRecordPanel(Guess guess) {
             setLayout(new FlowLayout(FlowLayout.LEFT));
-            setBackground(Color.PINK); // debug
             for (var codePin : guess.getCode()) {
                 add(new ColorDot(GamePanel.COLORS[codePin.getIndex()], 40));
             }

@@ -13,7 +13,7 @@ public class SpinnerWithLabel extends JPanel {
 
     public SpinnerWithLabel(String text, SpinnerNumberModel model) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        setBorder(new EmptyBorder(5,5,5,5));
+        setBorder(new EmptyBorder(5, 5, 5, 5));
 
         spinner = new JSpinner(model);
         var spinnerSize = new Dimension(60, spinner.getEditor().getPreferredSize().height);

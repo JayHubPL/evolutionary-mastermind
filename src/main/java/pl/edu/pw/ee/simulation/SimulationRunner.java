@@ -21,7 +21,7 @@ public abstract class SimulationRunner extends SwingWorker<SimulationStatistics,
 
     @Override
     protected SimulationStatistics doInBackground() {
-        ExecutorService executorService = new ThreadPoolExecutor(
+        var executorService = new ThreadPoolExecutor(
                 Runtime.getRuntime().availableProcessors(),
                 Runtime.getRuntime().availableProcessors() * 2,
                 100L, TimeUnit.MILLISECONDS,

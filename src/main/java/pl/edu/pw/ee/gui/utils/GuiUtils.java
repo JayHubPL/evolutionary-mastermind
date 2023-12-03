@@ -1,5 +1,6 @@
 package pl.edu.pw.ee.gui.utils;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
@@ -27,7 +28,14 @@ public class GuiUtils {
     }
 
     public static GridBagConstraints getListConstraints() {
-        return (GridBagConstraints)listConstraints.clone();
+        return (GridBagConstraints) listConstraints.clone();
+    }
+
+    public static void revalidateAndRepaintLater(Component component) {
+        SwingUtilities.invokeLater(() -> {
+            component.revalidate();
+            component.repaint();
+        });
     }
 
 }

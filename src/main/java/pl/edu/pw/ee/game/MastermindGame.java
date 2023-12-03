@@ -45,7 +45,7 @@ public class MastermindGame {
     }
 
     public GameResults play() {
-        while(checkIfCanGuess()) {
+        while (checkIfCanGuess()) {
             makeGuess();
         }
         GameResults.GameState gameState = GameResults.GameState.NOT_FINISHED;

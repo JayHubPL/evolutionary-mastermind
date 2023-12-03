@@ -15,11 +15,12 @@ public class ConfigurationInputPanel extends JPanel {
     private final SecretCodeConfigurationPanel secretCodeConfigPanel;
     private final FirstGuessConfigurationPanel firstGuessConfigPanel;
     private final EvoAlgorithmConfigurationPanel evoAlgorithmConfigPanel;
+    @Getter
     private final SimulatorConfigurationPanel simulatorConfigPanel;
     @Getter
     private GameVariant gameVariant;
 
-    public ConfigurationInputPanel() {
+    public ConfigurationInputPanel(SimulationResultsPanel simulationResultsPanel) {
         gameVariant = DEFAULT_GAME_VARIANT;
 
         setBorder(new TitledBorder("Konfiguracja"));
@@ -30,7 +31,7 @@ public class ConfigurationInputPanel extends JPanel {
         secretCodeConfigPanel = new SecretCodeConfigurationPanel();
         firstGuessConfigPanel = new FirstGuessConfigurationPanel();
         evoAlgorithmConfigPanel = new EvoAlgorithmConfigurationPanel();
-        simulatorConfigPanel = new SimulatorConfigurationPanel(this);
+        simulatorConfigPanel = new SimulatorConfigurationPanel(this, simulationResultsPanel);
 
         GridBagConstraints gbc = GuiUtils.getListConstraints();
         add(gameConfigPanel, gbc);

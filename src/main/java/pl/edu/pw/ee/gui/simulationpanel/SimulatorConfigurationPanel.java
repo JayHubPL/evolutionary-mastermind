@@ -1,9 +1,8 @@
 package pl.edu.pw.ee.gui.simulationpanel;
 
-import lombok.SneakyThrows;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
-import pl.edu.pw.ee.gui.utils.ProgressListener;
 import pl.edu.pw.ee.simulation.EvoAlgorithmSimulationRunner;
 import pl.edu.pw.ee.simulation.SimulationRunner;
 
@@ -12,12 +11,13 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 @Slf4j
-public class SimulatorConfigurationPanel extends JPanel implements ProgressListener {
+public class SimulatorConfigurationPanel extends JPanel {
 
     private final SpinnerWithLabel numberOfSimulationsSpinnerWithLabel;
+    @Getter
     private SimulationRunner simulationRunner = null;
 
-    public SimulatorConfigurationPanel(ConfigurationInputPanel parent) {
+    public SimulatorConfigurationPanel(ConfigurationInputPanel parent, SimulationResultsPanel simulationResultsPanel) {
         setLayout(new GridBagLayout());
         setBorder(new TitledBorder("Symulacje"));
 
@@ -35,7 +35,7 @@ public class SimulatorConfigurationPanel extends JPanel implements ProgressListe
             var simulationProgressDialog = new SimulationProgressDialog(this);
             simulationRunner = new EvoAlgorithmSimulationRunner(getNumberOfSimulations(), parent.getSimulationConfig());
             simulationRunner.addProgressListener(simulationProgressDialog);
-            simulationRunner.addProgressListener(this);
+            simulationRunner.addProgressListener(simulationResultsPanel);
             simulationRunner.execute();
         });
 
@@ -54,11 +54,5 @@ public class SimulatorConfigurationPanel extends JPanel implements ProgressListe
         if (simulationRunner != null) {
             simulationRunner.cancel(true);
         }
-    }
-
-    @Override
-    @SneakyThrows
-    public void done() {
-        log.info("{}", simulationRunner.get());
     }
 }
