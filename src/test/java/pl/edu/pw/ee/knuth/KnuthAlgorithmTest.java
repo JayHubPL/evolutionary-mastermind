@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.evo;
+package pl.edu.pw.ee.knuth;
 
 import org.junit.Test;
 import pl.edu.pw.ee.game.Code;
