@@ -30,13 +30,7 @@ public class KnuthAlgorithm implements CodeBreaker {
         }
         return possibleCodes.stream()
                 .map(code -> Pair.of(code, calculateMaximumPartitionSize(code, possibleCodes)))
-                .min((p1, p2) -> {
-                    var c1 = p1.getSecond().compareTo(p2.getSecond());
-                    if (c1 == 0) {
-                        return p1.getFirst().toString().compareTo(p2.getFirst().toString());
-                    }
-                    return c1;
-                })
+                .min(Comparator.<Pair<Code, Integer>, Integer>comparing(Pair::getSecond).thenComparing(p -> p.getFirst().toString()))
                 .map(Pair::getFirst)
                 .orElseThrow();
     }

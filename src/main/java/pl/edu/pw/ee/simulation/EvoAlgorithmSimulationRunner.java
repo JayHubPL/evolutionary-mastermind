@@ -3,7 +3,7 @@ package pl.edu.pw.ee.simulation;
 import pl.edu.pw.ee.evo.EvoAlgorithm;
 import pl.edu.pw.ee.evo.EvoAlgorithmConfig;
 import pl.edu.pw.ee.evo.PopulationGenerator;
-import pl.edu.pw.ee.evo.operators.*;
+import pl.edu.pw.ee.evo.operators.impl.*;
 import pl.edu.pw.ee.game.Code;
 
 public class EvoAlgorithmSimulationRunner extends SimulationRunner {
@@ -11,7 +11,7 @@ public class EvoAlgorithmSimulationRunner extends SimulationRunner {
     private final SimulationConfig simulationConfig;
     private final PopulationGenerator populationGenerator;
 
-    public EvoAlgorithmSimulationRunner(int numberOfSimulations, SimulationConfig simulationConfig) {
+    private EvoAlgorithmSimulationRunner(int numberOfSimulations, SimulationConfig simulationConfig) {
         super(numberOfSimulations);
         this.simulationConfig = simulationConfig;
         populationGenerator = new PopulationGenerator(simulationConfig.getGameVariant());
@@ -32,7 +32,16 @@ public class EvoAlgorithmSimulationRunner extends SimulationRunner {
                 .crosser(new StandardCrosser(gameVariant))
                 .mutator(new ColorShiftMutator(gameVariant, simulationConfig.getMutationChance()))
                 .build();
-        return new Simulation(new EvoAlgorithm(evoAlgorithmConfig), simulationConfig);
+        return new Simulation(gameVariant, new EvoAlgorithm(evoAlgorithmConfig), simulationConfig.getSecretCode().orElse(new Code(gameVariant)));
+    }
+
+    public static class Factory implements SimulationRunnerFactory {
+
+        @Override
+        public SimulationRunner createSimulationRunner(int numberOfSimulations, SimulationConfig simulationConfig) {
+            return new EvoAlgorithmSimulationRunner(numberOfSimulations, simulationConfig);
+        }
+
     }
 
 }

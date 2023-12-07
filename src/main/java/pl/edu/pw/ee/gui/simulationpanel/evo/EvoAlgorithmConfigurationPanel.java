@@ -1,4 +1,7 @@
-package pl.edu.pw.ee.gui.simulationpanel;
+package pl.edu.pw.ee.gui.simulationpanel.evo;
+
+import pl.edu.pw.ee.gui.utils.CheckBoxWithLabel;
+import pl.edu.pw.ee.gui.utils.SpinnerWithLabel;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

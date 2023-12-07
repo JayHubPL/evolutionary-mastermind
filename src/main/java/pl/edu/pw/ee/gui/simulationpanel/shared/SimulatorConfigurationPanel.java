@@ -1,10 +1,11 @@
-package pl.edu.pw.ee.gui.simulationpanel;
+package pl.edu.pw.ee.gui.simulationpanel.shared;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
-import pl.edu.pw.ee.simulation.EvoAlgorithmSimulationRunner;
+import pl.edu.pw.ee.gui.utils.SpinnerWithLabel;
 import pl.edu.pw.ee.simulation.SimulationRunner;
+import pl.edu.pw.ee.simulation.SimulationRunnerFactory;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -17,7 +18,7 @@ public class SimulatorConfigurationPanel extends JPanel {
     @Getter
     private SimulationRunner simulationRunner = null;
 
-    public SimulatorConfigurationPanel(ConfigurationInputPanel parent, SimulationResultsPanel simulationResultsPanel) {
+    public SimulatorConfigurationPanel(ConfigurationInputAbstractPanel parent, SimulationRunnerFactory simulationRunnerFactory, SimulationResultsPanel simulationResultsPanel) {
         setLayout(new GridBagLayout());
         setBorder(new TitledBorder("Symulacje"));
 
@@ -33,7 +34,7 @@ public class SimulatorConfigurationPanel extends JPanel {
                 return;
             }
             var simulationProgressDialog = new SimulationProgressDialog(this);
-            simulationRunner = new EvoAlgorithmSimulationRunner(getNumberOfSimulations(), parent.getSimulationConfig());
+            simulationRunner = simulationRunnerFactory.createSimulationRunner(getNumberOfSimulations(), parent.getSimulationConfig());
             simulationRunner.addProgressListener(simulationProgressDialog);
             simulationRunner.addProgressListener(simulationResultsPanel);
             simulationRunner.execute();

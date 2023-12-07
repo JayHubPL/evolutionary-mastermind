@@ -1,7 +1,8 @@
 package pl.edu.pw.ee.gui;
 
 import pl.edu.pw.ee.gui.gamepanel.GameCard;
-import pl.edu.pw.ee.gui.simulationpanel.SimulationPanel;
+import pl.edu.pw.ee.gui.simulationpanel.evo.EvoSimulationPanel;
+import pl.edu.pw.ee.gui.simulationpanel.knuth.KnuthSimulationPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,7 +43,10 @@ public class MainFrame extends JFrame {
         JMenu simulatorManu = new JMenu("Symulator");
         JMenuItem evoAlgorithmMenuItem = new JMenuItem("Algorytm ewolucyjny");
         simulatorManu.add(evoAlgorithmMenuItem);
-        evoAlgorithmMenuItem.addActionListener(e -> mainPanel.showCard(SimulationPanel.NAME));
+        evoAlgorithmMenuItem.addActionListener(e -> mainPanel.showCard(EvoSimulationPanel.NAME));
+        JMenuItem knuthAlgorithmMenuItem = new JMenuItem("Algorytm Knutha");
+        simulatorManu.add(knuthAlgorithmMenuItem);
+        knuthAlgorithmMenuItem.addActionListener(e -> mainPanel.showCard(KnuthSimulationPanel.NAME));
         mainMenuBar.add(simulatorManu);
 
         JMenu helpMenu = new JMenu("Pomoc");
@@ -61,7 +65,8 @@ public class MainFrame extends JFrame {
             setBackground(Color.MAGENTA); // debug
 
             add(new GameCard(), GameCard.NAME);
-            add(new SimulationPanel(), SimulationPanel.NAME);
+            add(new EvoSimulationPanel(), EvoSimulationPanel.NAME);
+            add(new KnuthSimulationPanel(), KnuthSimulationPanel.NAME);
         }
 
         void showCard(String cardName) {

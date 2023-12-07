@@ -45,7 +45,13 @@ public abstract class SimulationRunner extends SwingWorker<SimulationResults, Vo
 
     @Override
     protected void done() {
-        progressListeners.forEach(ProgressListener::done);
+        progressListeners.forEach(progressListener -> {
+            try {
+                progressListener.done(get());
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException("Simulation results cannot be obtained", e);
+            }
+        });
     }
 
     public void addProgressListener(ProgressListener progressListener) {
@@ -55,13 +61,13 @@ public abstract class SimulationRunner extends SwingWorker<SimulationResults, Vo
     @RequiredArgsConstructor
     class Simulation implements Callable<GameResults> {
 
+        private final GameVariant gameVariant;
         private final CodeBreaker codeBreaker;
-        private final SimulationConfig simulationConfig;
+        private final Code secretCode;
 
         @Override
         public GameResults call() {
-            var secretCode = simulationConfig.getSecretCode().orElse(new Code(simulationConfig.getGameVariant()));
-            var game = new MastermindGame(new CodeMaker(secretCode), codeBreaker, simulationConfig.getGameVariant());
+            var game = new MastermindGame(new CodeMaker(secretCode), codeBreaker, gameVariant);
             var results = game.play();
             progressListeners.forEach(pl -> pl.update((double) finishedSimulations.incrementAndGet() / numberOfSimulations));
             return results;

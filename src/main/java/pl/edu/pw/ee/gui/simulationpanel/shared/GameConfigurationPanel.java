@@ -1,14 +1,14 @@
-package pl.edu.pw.ee.gui.simulationpanel;
+package pl.edu.pw.ee.gui.simulationpanel.shared;
 
 import pl.edu.pw.ee.game.GameVariant;
+import pl.edu.pw.ee.gui.utils.CheckBoxWithLabel;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 public class GameConfigurationPanel extends JPanel {
 
-    public GameConfigurationPanel(ConfigurationInputPanel parent) {
-
+    public GameConfigurationPanel(ConfigurationInputAbstractPanel parent) {
         setBorder(new TitledBorder("Wariant gry"));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

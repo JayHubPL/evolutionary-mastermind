@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.gui.simulationpanel;
+package pl.edu.pw.ee.gui.simulationpanel.shared;
 
 import pl.edu.pw.ee.game.Code;
 import pl.edu.pw.ee.game.GameVariant;
@@ -14,7 +14,7 @@ public class SecretCodeConfigurationPanel extends JPanel {
     private final JRadioButton fixedSecretCodeRadioButton;
 
     public SecretCodeConfigurationPanel() {
-        secretCodeInputPanel = new InputPanel(ConfigurationInputPanel.DEFAULT_GAME_VARIANT, true);
+        secretCodeInputPanel = new InputPanel(ConfigurationInputAbstractPanel.DEFAULT_GAME_VARIANT, true);
 
         setLayout(new GridBagLayout());
         setBorder(new TitledBorder("Tajne hasło"));

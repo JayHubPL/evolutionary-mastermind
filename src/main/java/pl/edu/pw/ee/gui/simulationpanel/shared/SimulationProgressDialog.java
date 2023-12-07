@@ -1,7 +1,7 @@
-package pl.edu.pw.ee.gui.simulationpanel;
+package pl.edu.pw.ee.gui.simulationpanel.shared;
 
-import lombok.SneakyThrows;
 import pl.edu.pw.ee.gui.utils.ProgressListener;
+import pl.edu.pw.ee.simulation.SimulationResults;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,8 +41,7 @@ public class SimulationProgressDialog extends JDialog implements ProgressListene
     }
 
     @Override
-    @SneakyThrows
-    public void done() {
+    public void done(SimulationResults results) {
         dispose();
     }
 }

@@ -1,7 +1,8 @@
-package pl.edu.pw.ee.evo.operators;
+package pl.edu.pw.ee.evo.operators.impl;
 
 import lombok.RequiredArgsConstructor;
 import pl.edu.pw.ee.evo.Specimen;
+import pl.edu.pw.ee.evo.operators.Mutator;
 import pl.edu.pw.ee.game.GameVariant;
 
 import java.util.Random;

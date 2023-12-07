@@ -3,11 +3,13 @@ package pl.edu.pw.ee.game;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@RequiredArgsConstructor
 public class MastermindGame {
 
     @Getter(AccessLevel.NONE)
@@ -21,12 +23,6 @@ public class MastermindGame {
 
     public MastermindGame(CodeBreaker codeBreaker, GameVariant variant) {
         this(new CodeMaker(variant), codeBreaker, variant);
-    }
-
-    public MastermindGame(CodeMaker codeMaker, CodeBreaker codeBreaker, GameVariant variant) {
-        this.codeMaker = codeMaker;
-        this.codeBreaker = codeBreaker;
-        this.variant = variant;
     }
 
     public boolean checkIfCanGuess() {

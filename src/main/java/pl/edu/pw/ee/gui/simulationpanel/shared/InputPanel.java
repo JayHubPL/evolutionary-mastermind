@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.gui.simulationpanel;
+package pl.edu.pw.ee.gui.simulationpanel.shared;
 
 import pl.edu.pw.ee.game.Code;
 import pl.edu.pw.ee.game.Color;
@@ -51,15 +51,15 @@ public class InputPanel extends JPanel {
                 colorButtons.add(colorButton);
                 inputPanel.add(colorButton);
             }
+            randomizeInput();
+        } else if (!gameVariant.getDuplicateColorsAllowed() && !areButtonColorsUnique()) {
+            randomizeInput();
         }
-        SwingUtilities.invokeLater(() -> {
-            getParent().revalidate();
-            getParent().repaint();
-        });
+        GuiUtils.revalidateAndRepaintLater(this);
     }
 
     public boolean isInputValid() {
-        return colorButtons.stream().map(ColorButton::getColorIndex).allMatch(Objects::nonNull);
+        return colorButtons.stream().map(ColorButton::getColorIndex).allMatch(Objects::nonNull) && (gameVariant.getDuplicateColorsAllowed() || areButtonColorsUnique());
     }
 
     public Code getInputAsCode() {
@@ -79,6 +79,10 @@ public class InputPanel extends JPanel {
         for (int i = 0; i < colorButtons.size(); i++) {
             colorButtons.get(i).setColorIndex(randomColorSequence.get(i).getIndex());
         }
+    }
+
+    public boolean areButtonColorsUnique() {
+        return colorButtons.stream().map(ColorButton::getColorIndex).distinct().count() == colorButtons.size();
     }
 
 }

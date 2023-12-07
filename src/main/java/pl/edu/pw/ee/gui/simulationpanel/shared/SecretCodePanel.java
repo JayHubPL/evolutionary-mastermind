@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.gui.simulationpanel;
+package pl.edu.pw.ee.gui.simulationpanel.shared;
 
 import pl.edu.pw.ee.game.Code;
 import pl.edu.pw.ee.gui.gamepanel.GamePanel;

@@ -24,7 +24,7 @@ public class SimulationRunnerTest {
                 .initialPopulationDuplicatesAllowed(true)
                 .populationSize(100)
                 .build();
-        var simulationRunner = new EvoAlgorithmSimulationRunner(1, simulationConfig);
+        var simulationRunner = new EvoAlgorithmSimulationRunner.Factory().createSimulationRunner(1, simulationConfig);
         simulationRunner.execute();
         simulationRunner.get().getIndividualGameResults().stream()
                 .map(GameResults::getAttemptHistory)

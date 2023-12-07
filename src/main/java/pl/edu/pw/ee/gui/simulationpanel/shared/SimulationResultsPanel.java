@@ -1,9 +1,9 @@
-package pl.edu.pw.ee.gui.simulationpanel;
+package pl.edu.pw.ee.gui.simulationpanel.shared;
 
-import lombok.SneakyThrows;
 import pl.edu.pw.ee.gui.gamepanel.GuessHistoryPanel;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
 import pl.edu.pw.ee.gui.utils.ProgressListener;
+import pl.edu.pw.ee.gui.utils.ValueWithLabel;
 import pl.edu.pw.ee.simulation.SimulationResults;
 
 import javax.swing.*;
@@ -16,8 +16,6 @@ import java.text.NumberFormat;
 
 public class SimulationResultsPanel extends JPanel implements ProgressListener, ItemListener {
 
-    private final SimulationPanel parent;
-
     private final ValueWithLabel averageGuessCountValueWithLabel;
     private final ValueWithLabel winPercentageValueWithLabel;
     private final ValueWithLabel numberOfWinsValueWithLabel;
@@ -29,10 +27,9 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
 
     private SimulationResults lastSimulationResults = null;
 
-    public SimulationResultsPanel(SimulationPanel parent) {
+    public SimulationResultsPanel() {
         setLayout(new GridBagLayout());
         setBorder(new TitledBorder("Wyniki symulacji"));
-        this.parent = parent;
 
         averageGuessCountValueWithLabel = new ValueWithLabel("Średnia liczba prób odgadnięcia hasła");
         var percentFormatter = NumberFormat.getPercentInstance();
@@ -66,9 +63,8 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
     }
 
     @Override
-    @SneakyThrows
-    public void done() {
-        lastSimulationResults = parent.getConfigurationInputPanel().getSimulatorConfigPanel().getSimulationRunner().get();
+    public void done(SimulationResults results) {
+        lastSimulationResults = results;
         var numberOfSimulations = lastSimulationResults.getIndividualGameResults().size();
 
         averageGuessCountValueWithLabel.setValue(lastSimulationResults.getAverageGuessCount());

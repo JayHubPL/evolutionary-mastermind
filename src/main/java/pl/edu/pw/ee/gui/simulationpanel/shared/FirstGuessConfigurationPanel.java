@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.gui.simulationpanel;
+package pl.edu.pw.ee.gui.simulationpanel.shared;
 
 import pl.edu.pw.ee.game.Code;
 import pl.edu.pw.ee.game.GameVariant;
@@ -14,7 +14,7 @@ public class FirstGuessConfigurationPanel extends JPanel {
     private final JRadioButton fixedFirstGuessRadioButton;
 
     public FirstGuessConfigurationPanel() {
-        firstGuessInputPanel = new InputPanel(ConfigurationInputPanel.DEFAULT_GAME_VARIANT, false);
+        firstGuessInputPanel = new InputPanel(ConfigurationInputAbstractPanel.DEFAULT_GAME_VARIANT, false);
 
         setBorder(new TitledBorder("Kombinacja początkowa"));
         setLayout(new GridBagLayout());

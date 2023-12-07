@@ -1,7 +1,7 @@
 package pl.edu.pw.ee.evo;
 
 import org.junit.Test;
-import pl.edu.pw.ee.evo.operators.*;
+import pl.edu.pw.ee.evo.operators.impl.*;
 import pl.edu.pw.ee.game.Code;
 import pl.edu.pw.ee.game.Color;
 import pl.edu.pw.ee.game.GameVariant;

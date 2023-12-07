@@ -1,4 +1,4 @@
-package pl.edu.pw.ee.gui.simulationpanel;
+package pl.edu.pw.ee.gui.utils;
 
 import lombok.Getter;
 
