@@ -11,8 +11,12 @@ public class GuessHistoryPanel extends JPanel {
 
     private final JPanel guessesPanel;
     private final JScrollPane scrollPane;
+    private final int codePinSize, scorePinSize;
 
-    public GuessHistoryPanel() {
+    public GuessHistoryPanel(int codePinSize, int scorePinSize) {
+        this.codePinSize = codePinSize;
+        this.scorePinSize = scorePinSize;
+
         setLayout(new BorderLayout());
         setBorder(new TitledBorder("Próby odgadnięcia hasła"));
 
@@ -37,15 +41,15 @@ public class GuessHistoryPanel extends JPanel {
         guessesPanel.removeAll();
     }
 
-    static class GuessHistoryRecordPanel extends JPanel {
+    class GuessHistoryRecordPanel extends JPanel {
 
         public GuessHistoryRecordPanel(Guess guess) {
             setLayout(new FlowLayout(FlowLayout.LEFT));
             for (var codePin : guess.getCode()) {
-                add(new ColorDot(GamePanel.COLORS[codePin.getIndex()], 40));
+                add(new ColorDot(GamePanel.COLORS[codePin.getIndex()], codePinSize));
             }
             for (var scorePin : guess.getScore()) {
-                add(new ColorDot(scorePin, 30));
+                add(new ColorDot(scorePin, scorePinSize));
             }
             setMaximumSize(new Dimension(Integer.MAX_VALUE, getPreferredSize().height));
         }

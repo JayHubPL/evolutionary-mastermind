@@ -17,7 +17,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel(GameVariant gameVariant) {
         playerCodeBreaker = new PlayerCodeBreaker();
-        guessHistoryPanel = new GuessHistoryPanel();
+        guessHistoryPanel = new GuessHistoryPanel(40, 30);
         game = new MastermindGame(playerCodeBreaker, gameVariant);
 
         setLayout(new BorderLayout());

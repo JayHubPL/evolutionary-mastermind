@@ -46,7 +46,7 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
         secretCodePanel = new SecretCodePanel();
         secretCodePanel.setVisible(false);
 
-        guessHistoryPanel = new GuessHistoryPanel();
+        guessHistoryPanel = new GuessHistoryPanel(30, 20);
         guessHistoryPanel.setVisible(false);
 
         var gbc = GuiUtils.getListConstraints();

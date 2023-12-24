@@ -8,7 +8,7 @@ import pl.edu.pw.ee.game.GameVariant;
 import java.util.Random;
 
 @RequiredArgsConstructor
-public class ColorShiftMutator implements Mutator {
+public class ValueShiftMutator implements Mutator {
 
     private static final Random random = new Random();
     private final GameVariant gameVariant;

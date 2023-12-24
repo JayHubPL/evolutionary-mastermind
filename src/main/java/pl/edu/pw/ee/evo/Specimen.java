@@ -14,6 +14,11 @@ public class Specimen extends Code {
         super(code);
     }
 
+    public Specimen(Specimen other) {
+        super(other);
+        fitness = other.getFitness();
+    }
+
     @Override
     public String toString() {
         return String.format("%s, fitness=%d", codeSequence, fitness);

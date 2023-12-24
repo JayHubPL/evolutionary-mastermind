@@ -3,7 +3,10 @@ package pl.edu.pw.ee.simulation;
 import pl.edu.pw.ee.evo.EvoAlgorithm;
 import pl.edu.pw.ee.evo.EvoAlgorithmConfig;
 import pl.edu.pw.ee.evo.PopulationGenerator;
-import pl.edu.pw.ee.evo.operators.impl.*;
+import pl.edu.pw.ee.evo.operators.impl.ConsecutivePairMatcher;
+import pl.edu.pw.ee.evo.operators.impl.OnePointSplitCrosser;
+import pl.edu.pw.ee.evo.operators.impl.StandardEvaluator;
+import pl.edu.pw.ee.evo.operators.impl.ValueShiftMutator;
 import pl.edu.pw.ee.game.Code;
 
 public class EvoAlgorithmSimulationRunner extends SimulationRunner {
@@ -27,10 +30,10 @@ public class EvoAlgorithmSimulationRunner extends SimulationRunner {
                 .initialPopulationDuplicatesAllowed(simulationConfig.isInitialPopulationDuplicatesAllowed())
                 .populationGenerator(populationGenerator)
                 .evaluator(new StandardEvaluator())
-                .selector(new UnbalancedRouletteSelector())
+                .selector(simulationConfig.getSelector())
                 .pairMatcher(new ConsecutivePairMatcher())
-                .crosser(new StandardCrosser(gameVariant))
-                .mutator(new ColorShiftMutator(gameVariant, simulationConfig.getMutationChance()))
+                .crosser(new OnePointSplitCrosser(gameVariant))
+                .mutator(new ValueShiftMutator(gameVariant, simulationConfig.getMutationChance()))
                 .build();
         return new Simulation(gameVariant, new EvoAlgorithm(evoAlgorithmConfig), simulationConfig.getSecretCode().orElse(new Code(gameVariant)));
     }

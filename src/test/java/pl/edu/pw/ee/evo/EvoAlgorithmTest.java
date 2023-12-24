@@ -24,8 +24,8 @@ public class EvoAlgorithmTest {
                 .evaluator(new StandardEvaluator())
                 .selector(new UnbalancedRouletteSelector())
                 .pairMatcher(new ConsecutivePairMatcher())
-                .crosser(new StandardCrosser(gameVariant))
-                .mutator(new ColorShiftMutator(gameVariant, 0.01))
+                .crosser(new OnePointSplitCrosser(gameVariant))
+                .mutator(new ValueShiftMutator(gameVariant, 0.01))
                 .build();
         var evo = new EvoAlgorithm(config);
         var game = new MastermindGame(evo, gameVariant);

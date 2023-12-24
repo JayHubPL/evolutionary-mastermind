@@ -23,7 +23,7 @@ public abstract class ConfigurationInputAbstractPanel extends JPanel {
 
         setBorder(new TitledBorder("Konfiguracja"));
         setLayout(new GridBagLayout());
-        setPreferredSize(new Dimension(280, Integer.MAX_VALUE));
+        setPreferredSize(new Dimension(340, Integer.MAX_VALUE));
 
         var gameConfigPanel = new GameConfigurationPanel(this);
         secretCodeConfigPanel = new SecretCodeConfigurationPanel();

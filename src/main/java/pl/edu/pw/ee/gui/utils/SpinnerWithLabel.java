@@ -16,7 +16,7 @@ public class SpinnerWithLabel extends JPanel {
         setBorder(new EmptyBorder(5, 5, 5, 5));
 
         spinner = new JSpinner(model);
-        var spinnerSize = new Dimension(60, spinner.getEditor().getPreferredSize().height);
+        var spinnerSize = new Dimension(80, spinner.getEditor().getPreferredSize().height);
         spinner.setPreferredSize(spinnerSize);
         spinner.setMaximumSize(spinnerSize);
 

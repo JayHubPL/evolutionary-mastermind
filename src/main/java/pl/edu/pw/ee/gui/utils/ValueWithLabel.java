@@ -22,7 +22,7 @@ public class ValueWithLabel extends JPanel {
         if (initialValue != null) {
             formattedTextField.setValue(initialValue);
         }
-        var textFieldSize = new Dimension(60, formattedTextField.getPreferredSize().height);
+        var textFieldSize = new Dimension(80, formattedTextField.getPreferredSize().height);
         formattedTextField.setMinimumSize(textFieldSize);
         formattedTextField.setPreferredSize(textFieldSize);
         formattedTextField.setMaximumSize(textFieldSize);

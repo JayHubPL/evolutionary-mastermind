@@ -2,6 +2,8 @@ package pl.edu.pw.ee.simulation;
 
 import lombok.Builder;
 import lombok.Value;
+import pl.edu.pw.ee.evo.operators.PairMatcher;
+import pl.edu.pw.ee.evo.operators.Selector;
 import pl.edu.pw.ee.game.Code;
 import pl.edu.pw.ee.game.GameVariant;
 
@@ -17,6 +19,8 @@ public class SimulationConfig {
     Code secretCode;
     boolean initialPopulationDuplicatesAllowed;
     double mutationChance;
+    Selector selector;
+    PairMatcher pairMatcher;
 
     public Optional<Code> getInitialGuess() {
         return Optional.ofNullable(initialGuess);

@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
-public class StandardCrosser implements Crosser {
+public class OnePointSplitCrosser implements Crosser {
 
     private static final Random random = new Random();
     private final GameVariant gameVariant;
