@@ -1,9 +1,14 @@
 package pl.edu.pw.ee.knuth;
 
-import pl.edu.pw.ee.game.*;
+import pl.edu.pw.ee.game.Code;
+import pl.edu.pw.ee.game.CodeBreaker;
+import pl.edu.pw.ee.game.GameVariant;
+import pl.edu.pw.ee.game.MastermindGame;
+import pl.edu.pw.ee.game.Score;
 import pl.edu.pw.ee.utils.CodePoolGenerator;
 import pl.edu.pw.ee.utils.Pair;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -11,11 +16,13 @@ import java.util.List;
 public class KnuthAlgorithm implements CodeBreaker {
 
     private final Code initialGuess;
+    private final List<Code> allCombinations;
     private final List<Code> possibleCodes;
 
     public KnuthAlgorithm(GameVariant gameVariant, Code initialGuess) {
         this.initialGuess = initialGuess;
-        possibleCodes = CodePoolGenerator.generateAllPossibleCodes(gameVariant);
+        allCombinations = CodePoolGenerator.generateAllPossibleCodes(gameVariant);
+        possibleCodes = new ArrayList<>(allCombinations);
     }
 
     @Override
@@ -28,7 +35,7 @@ public class KnuthAlgorithm implements CodeBreaker {
         if (possibleCodes.size() == 1) {
             return possibleCodes.get(0);
         }
-        return possibleCodes.stream()
+        return allCombinations.stream()
                 .map(code -> Pair.of(code, calculateMaximumPartitionSize(code, possibleCodes)))
                 .min(Comparator.<Pair<Code, Integer>, Integer>comparing(Pair::getSecond).thenComparing(p -> p.getFirst().toString()))
                 .map(Pair::getFirst)
