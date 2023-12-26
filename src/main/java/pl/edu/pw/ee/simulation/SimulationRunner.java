@@ -1,21 +1,29 @@
 package pl.edu.pw.ee.simulation;
 
 import lombok.RequiredArgsConstructor;
-import pl.edu.pw.ee.game.*;
+import pl.edu.pw.ee.game.Code;
+import pl.edu.pw.ee.game.CodeBreaker;
+import pl.edu.pw.ee.game.CodeMaker;
+import pl.edu.pw.ee.game.GameResults;
+import pl.edu.pw.ee.game.GameVariant;
+import pl.edu.pw.ee.game.MastermindGame;
 import pl.edu.pw.ee.gui.utils.ProgressListener;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 public abstract class SimulationRunner extends SwingWorker<SimulationResults, Void> {
 
     private final List<ProgressListener> progressListeners = new ArrayList<>();
     private final Integer numberOfSimulations;
-    private final AtomicInteger finishedSimulations = new AtomicInteger();
 
     protected abstract Simulation createSimulation();
 
@@ -26,20 +34,20 @@ public abstract class SimulationRunner extends SwingWorker<SimulationResults, Vo
                 Runtime.getRuntime().availableProcessors() * 2,
                 100L, TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<>());
-        var tasks = new ArrayList<Simulation>(numberOfSimulations);
+        var completionService = new ExecutorCompletionService<GameResults>(executorService);
         for (int i = 0; i < numberOfSimulations; i++) {
-            tasks.add(createSimulation());
+            completionService.submit(createSimulation());
         }
         var results = new ArrayList<GameResults>(numberOfSimulations);
-        try {
-            for (var task : executorService.invokeAll(tasks)) {
-                results.add(task.get());
+        for (int i = 0; i < numberOfSimulations; i++) {
+            try {
+                results.add(completionService.take().get());
+                progressListeners.forEach(pl -> pl.update((double) results.size() / numberOfSimulations));
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException("Simulation results cannot be obtained", e);
             }
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException("Simulation results cannot be obtained", e);
-        } finally {
-            executorService.shutdown();
         }
+        executorService.shutdown();
         return new SimulationResults(results);
     }
 
@@ -59,7 +67,7 @@ public abstract class SimulationRunner extends SwingWorker<SimulationResults, Vo
     }
 
     @RequiredArgsConstructor
-    class Simulation implements Callable<GameResults> {
+    public static class Simulation implements Callable<GameResults> {
 
         private final GameVariant gameVariant;
         private final CodeBreaker codeBreaker;
@@ -67,10 +75,7 @@ public abstract class SimulationRunner extends SwingWorker<SimulationResults, Vo
 
         @Override
         public GameResults call() {
-            var game = new MastermindGame(new CodeMaker(secretCode), codeBreaker, gameVariant);
-            var results = game.play();
-            progressListeners.forEach(pl -> pl.update((double) finishedSimulations.incrementAndGet() / numberOfSimulations));
-            return results;
+            return new MastermindGame(new CodeMaker(secretCode), codeBreaker, gameVariant).play();
         }
     }
 
