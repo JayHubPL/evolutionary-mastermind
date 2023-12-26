@@ -21,7 +21,7 @@ public class KnuthAlgorithm implements CodeBreaker {
 
     public KnuthAlgorithm(GameVariant gameVariant, Code initialGuess) {
         this.initialGuess = initialGuess;
-        allCombinations = CodePoolGenerator.generateAllPossibleCodes(gameVariant);
+        allCombinations = CodePoolGenerator.getAllPossibleCodes(gameVariant);
         possibleCodes = new ArrayList<>(allCombinations);
     }
 

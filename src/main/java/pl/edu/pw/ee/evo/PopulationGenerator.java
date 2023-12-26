@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class PopulationGenerator {
 
@@ -15,7 +17,7 @@ public class PopulationGenerator {
     private final List<Code> possibleCodes;
 
     public PopulationGenerator(GameVariant gameVariant) {
-        possibleCodes = Collections.synchronizedList(CodePoolGenerator.generateAllPossibleCodes(gameVariant));
+        possibleCodes = Collections.synchronizedList(CodePoolGenerator.getAllPossibleCodes(gameVariant));
     }
 
     public List<Specimen> generatePopulation(int size, boolean duplicatesAllowed) {
@@ -34,11 +36,15 @@ public class PopulationGenerator {
     }
 
     private List<Specimen> generatePopulationWithoutDuplicates(int size) {
-        Collections.shuffle(possibleCodes);
-        return possibleCodes.stream()
+        var indexes = IntStream.range(0, possibleCodes.size())
+                .boxed()
+                .collect(Collectors.toList());
+        Collections.shuffle(indexes);
+        return indexes.stream()
                 .limit(size)
+                .map(possibleCodes::get)
                 .map(Specimen::new)
-                .toList();
+                .collect(Collectors.toList());
     }
 
 }
