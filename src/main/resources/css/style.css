@@ -1,0 +1,16 @@
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0px;
+}
+p {
+    margin-top: 5px;
+}
+table {
+    margin: 5px
+}
+td, th {
+    border: 1px solid #ddd;
+    padding: 3px;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

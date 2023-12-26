@@ -2,7 +2,8 @@ package pl.edu.pw.ee.gui;
 
 import lombok.EqualsAndHashCode;
 import lombok.Value;
-import org.pegdown.PegDownProcessor;
+import pl.edu.pw.ee.gui.utils.MarkdownToHTMLConverter;
+import pl.edu.pw.ee.utils.FileReader;
 
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
@@ -13,20 +14,7 @@ import java.awt.*;
 @EqualsAndHashCode(callSuper = false)
 public class AboutDialog extends JDialog implements HyperlinkListener {
 
-    private static final String infoHtmlText = new PegDownProcessor().markdownToHtml("""
-            ## Symulator do algorytmów ewolucyjnych dla problemu gry Mastermind
-            ### Autor: Hubert Mazur
-            #### Promotor: dr hab. inż. Paweł Piotrowski
-
-            Projekt realizowany w ramach pracy inżynierskiej w semestrze 2023/24
-            na kierunku **Informatyka Stosowana** na **Politechnice Warszawskiej** zatytułowanej:
-
-            *Implementacja i analiza wariantów algorytmów ewolucyjnych z wykorzystaniem
-            indywidualnego symulatora do rozwiązywania problemu gry Mastermind*
-
-            Kod źródłowy: [GitHub](https://github.com/JayHubPL)
-            """
-    );
+    private static final String infoHtmlText = MarkdownToHTMLConverter.convert(FileReader.readResourceFile("markdown/about.md"));
 
     public AboutDialog(JFrame parent) {
         super(parent, "O programie", true);
