@@ -17,7 +17,7 @@ public class SimulationProgressDialog extends JDialog implements ProgressListene
         setLayout(new FlowLayout());
         setResizable(false);
         setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-//        setAlwaysOnTop(true);
+        setAlwaysOnTop(true);
 
         progressBar = new JProgressBar();
         progressBar.setStringPainted(true);

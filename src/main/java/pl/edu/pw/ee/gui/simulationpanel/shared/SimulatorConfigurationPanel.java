@@ -10,6 +10,7 @@ import pl.edu.pw.ee.simulation.SimulationRunnerFactory;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.concurrent.CancellationException;
 
 @Slf4j
 public class SimulatorConfigurationPanel extends JPanel {
@@ -53,7 +54,10 @@ public class SimulatorConfigurationPanel extends JPanel {
 
     public void terminateSimulation() {
         if (simulationRunner != null) {
-            simulationRunner.cancel(true);
+            try {
+                simulationRunner.cancel(true);
+            } catch (CancellationException ignored) {
+            }
         }
     }
 }
