@@ -22,23 +22,37 @@ public class RulesPanel extends JPanel {
         textPane.setContentType("text/html");
         textPane.setText(rulesHtmlText);
         textPane.setEditable(false);
+        textPane.setFocusable(false);
+        textPane.setCaretPosition(0); // align scroll pane to the top
 
-        var panelWithInputs = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        var panelWithInputs = new JPanel();
+        panelWithInputs.setLayout(new BoxLayout(panelWithInputs, BoxLayout.X_AXIS));
+        panelWithInputs.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
+        var font = new Font("Segoe UI", Font.BOLD, 20);
+        var buttonFont = font.deriveFont(Font.PLAIN);
         var chooseVariantLabel = new JLabel("Wybierz wariant gry aby rozpocząć: ");
-        chooseVariantLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        chooseVariantLabel.setFont(font);
         var duplicatesCheckBox = new JCheckBox("Dozwolone powtórzenia kolorów w haśle");
+        duplicatesCheckBox.setFont(buttonFont);
         var classicVersionButton = new JButton("Classic");
+        classicVersionButton.setFont(buttonFont);
         classicVersionButton.addActionListener(e -> gameCard.setContents(new GamePanel(GameVariant.classic(duplicatesCheckBox.isSelected()))));
         var deluxeVersionButton = new JButton("Deluxe");
+        deluxeVersionButton.setFont(buttonFont);
         deluxeVersionButton.addActionListener(e -> gameCard.setContents(new GamePanel(GameVariant.deluxe(duplicatesCheckBox.isSelected()))));
 
         panelWithInputs.add(chooseVariantLabel);
+        panelWithInputs.add(Box.createHorizontalStrut(5));
         panelWithInputs.add(classicVersionButton);
+        panelWithInputs.add(Box.createHorizontalStrut(5));
         panelWithInputs.add(deluxeVersionButton);
+        panelWithInputs.add(Box.createHorizontalStrut(5));
         panelWithInputs.add(duplicatesCheckBox);
 
-        add(textPane, BorderLayout.CENTER);
+        panelWithInputs.setPreferredSize(new Dimension(Integer.MAX_VALUE, 60));
+
+        add(new JScrollPane(textPane), BorderLayout.CENTER);
         add(panelWithInputs, BorderLayout.SOUTH);
     }
 

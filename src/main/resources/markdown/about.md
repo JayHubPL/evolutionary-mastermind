@@ -8,4 +8,4 @@ na kierunku **Informatyka Stosowana** na **Politechnice Warszawskiej** zatytuło
 *Implementacja i analiza wariantów algorytmów ewolucyjnych z wykorzystaniem
 indywidualnego symulatora do rozwiązywania problemu gry Mastermind*
 
-Kod źródłowy: [GitHub](https://github.com/JayHubPL)
+Kod źródłowy: [GitHub](https://github.com/JayHubPL/evolutionary-mastermind)

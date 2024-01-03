@@ -1,5 +1,7 @@
 package pl.edu.pw.ee.gui;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.extras.components.FlatButton;
 import pl.edu.pw.ee.gui.gamepanel.GameCard;
 import pl.edu.pw.ee.gui.simulationpanel.evo.EvoSimulationPanel;
 import pl.edu.pw.ee.gui.simulationpanel.knuth.KnuthSimulationPanel;
@@ -14,12 +16,12 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         mainPanel = new MainPanel();
 
-        setName("Mastermind");
+        setName("Evolutionary Mastermind");
+        setTitle("Evolutionary Mastermind");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(true);
         setLayout(new BorderLayout());
         setSize(1000, 800);
-        setBackground(Color.YELLOW); // debug
 
         initializeMenuBar();
 
@@ -28,6 +30,7 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
+        FlatDarkLaf.setup();
         SwingUtilities.invokeLater(MainFrame::new);
     }
 
@@ -35,7 +38,7 @@ public class MainFrame extends JFrame {
         JMenuBar mainMenuBar = new JMenuBar();
 
         JMenu gameMenu = new JMenu("Gra");
-        JMenuItem gameMenuItem = new JMenuItem("Gra własna");
+        JMenuItem gameMenuItem = new JMenuItem("Zasady");
         gameMenu.add(gameMenuItem);
         gameMenuItem.addActionListener(e -> mainPanel.showCard(GameCard.NAME));
         mainMenuBar.add(gameMenu);
@@ -55,6 +58,15 @@ public class MainFrame extends JFrame {
         aboutManuItem.addActionListener(e -> new AboutDialog(this));
         mainMenuBar.add(helpMenu);
 
+        mainMenuBar.add(Box.createHorizontalGlue());
+
+        var helpButton = new FlatButton();
+
+        helpButton.setButtonType(FlatButton.ButtonType.help);
+        helpButton.setFocusable(false);
+        helpButton.addActionListener(e -> new AboutDialog(this));
+        mainMenuBar.add(helpButton);
+
         setJMenuBar(mainMenuBar);
     }
 
@@ -62,7 +74,6 @@ public class MainFrame extends JFrame {
 
         MainPanel() {
             setLayout(new CardLayout());
-            setBackground(Color.MAGENTA); // debug
 
             add(new GameCard(), GameCard.NAME);
             add(new EvoSimulationPanel(), EvoSimulationPanel.NAME);
