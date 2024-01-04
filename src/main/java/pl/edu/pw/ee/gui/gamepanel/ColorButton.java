@@ -2,6 +2,7 @@ package pl.edu.pw.ee.gui.gamepanel;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import pl.edu.pw.ee.gui.utils.ColorPalette;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
 
 import javax.swing.*;
@@ -21,7 +22,8 @@ public class ColorButton extends JButton {
         setMinimumSize(new Dimension(size, size));
         setBorder(BorderFactory.createEmptyBorder());
         setContentAreaFilled(false);
-        setBackground(Color.GRAY);
+        setBackground(ColorPalette.DARK_GRAY.getColor());
+        setFont(getFont().deriveFont(16f));
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -36,7 +38,16 @@ public class ColorButton extends JButton {
 
     public void setColorIndex(Integer colorIndex) {
         this.colorIndex = colorIndex;
+        updateTextValue(colorIndex);
         repaint();
+    }
+
+    private void updateTextValue(Integer colorIndex) {
+        if (colorIndex == null) {
+            return;
+        }
+        setForeground(ColorPalette.getFontColor(colorIndex));
+        setText(colorIndex.toString());
     }
 
     private void cycleColor(Direction direction) {
@@ -46,7 +57,8 @@ public class ColorButton extends JButton {
             colorIndex = colorIndex + direction.getShift();
             colorIndex = colorIndex < 0 ? numberOfColors - 1 : colorIndex % numberOfColors;
         }
-        setBackground(GamePanel.COLORS[colorIndex]);
+        updateTextValue(colorIndex);
+        setBackground(ColorPalette.fromIndex(colorIndex));
     }
 
     @Override
@@ -66,7 +78,7 @@ public class ColorButton extends JButton {
 
     @Override
     public void repaint() {
-        setBackground(colorIndex == null ? Color.GRAY : GamePanel.COLORS[colorIndex]);
+        setBackground(colorIndex == null ? ColorPalette.DARK_GRAY.getColor() : ColorPalette.fromIndex(colorIndex));
         super.repaint();
     }
 

@@ -2,6 +2,7 @@ package pl.edu.pw.ee.gui.gamepanel;
 
 import pl.edu.pw.ee.game.Guess;
 import pl.edu.pw.ee.gui.utils.ColorDot;
+import pl.edu.pw.ee.gui.utils.ColorPalette;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -46,7 +47,7 @@ public class GuessHistoryPanel extends JPanel {
         public GuessHistoryRecordPanel(Guess guess) {
             setLayout(new FlowLayout(FlowLayout.LEFT));
             for (var codePin : guess.getCode()) {
-                add(new ColorDot(GamePanel.COLORS[codePin.getIndex()], codePinSize));
+                add(new ColorDot(ColorPalette.fromIndex(codePin.getIndex()), codePinSize));
             }
             for (var scorePin : guess.getScore()) {
                 add(new ColorDot(scorePin, scorePinSize));

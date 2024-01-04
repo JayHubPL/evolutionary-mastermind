@@ -6,7 +6,7 @@ import pl.edu.pw.ee.game.GameVariant;
 import pl.edu.pw.ee.game.RandomUtils;
 import pl.edu.pw.ee.gui.gamepanel.ColorButton;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
-import pl.edu.pw.ee.utils.FileReader;
+import pl.edu.pw.ee.utils.ResourceUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class InputPanel extends JPanel {
 
-    private static final String randomizeIconResourceName = "icons/reload.png";
+    private static final String randomizeIconResourceName = "icons/randomize.png";
     private final JPanel inputPanel;
     private final List<ColorButton> colorButtons = new ArrayList<>();
     private GameVariant gameVariant;
@@ -68,8 +68,7 @@ public class InputPanel extends JPanel {
     }
 
     private JButton createGenerateButton() {
-        var randomizeIcon = new ImageIcon(FileReader.getResourceURL(randomizeIconResourceName));
-        randomizeIcon = new ImageIcon(randomizeIcon.getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH));
+        var randomizeIcon = ResourceUtils.getIcon(randomizeIconResourceName, 20);
         var generateButton = new JButton("Losuj", randomizeIcon);
         generateButton.addActionListener(e -> randomizeInput());
         return generateButton;

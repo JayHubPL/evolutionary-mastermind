@@ -4,7 +4,7 @@ import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.data.MutableDataSet;
-import pl.edu.pw.ee.utils.FileReader;
+import pl.edu.pw.ee.utils.ResourceUtils;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class MarkdownToHTMLConverter {
         options.set(Parser.EXTENSIONS, List.of(TablesExtension.create()));
         parser = Parser.builder(options).build();
         renderer = HtmlRenderer.builder(options).build();
-        styling = String.format("<style>%s</style>", FileReader.readResourceFile(cssResourceName));
+        styling = String.format("<style>%s</style>", ResourceUtils.readResourceFile(cssResourceName));
     }
 
     public static String convert(String markdown) {

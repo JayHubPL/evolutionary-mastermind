@@ -8,14 +8,14 @@ import java.awt.*;
 import java.awt.event.ItemListener;
 import java.util.Vector;
 
+@Getter
 public class ComboBoxWithLabel<T> extends JPanel {
 
-    @Getter
     private final JComboBox<T> comboBox;
 
     public ComboBoxWithLabel(String text, Vector<T> items) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        setBorder(new EmptyBorder(0, 5, 5, 5));
+        setBorder(new EmptyBorder(5, 5, 5, 5));
 
         comboBox = new JComboBox<>(items);
 

@@ -25,5 +25,16 @@ Sekwencja zostanie następnie wyświetlona poniżej wraz z przyznanymi pineskami
 Gracz zwycięża gdy odgadnie hasło, czyli otrzyma tyle czarnych pinesek, jaka jest długość hasła.
 <br>Gracz przegrywa, jeżeli nie uda mu się zgadnąć hasła w limicie **12 prób**.
 
-## Przykład
-![]($example.jpg$) 
+## Przykład rundy
+Niech ukrytym hasłem będzie następująca sekwencja:
+
+![]($example_secret.png$)
+
+Osoba odgadująca dokonuje próby odgadnięcia hasła proponując następującą sekwencję:
+
+![]($example_guess.png$)
+
+W rezultacie otrzymuje w ramach oceny po jednej czarnej i białej pinesce.
+<br>**Czarna** pineska została przyznana za pomarańczowy kolor na czwartej pozycji. Żaden inny kolor nie zgadza się z hasłem.
+<br>**Biała** pineska została przyznana za kolor fioletowy na pozycji trzeciej, ponieważ znajduje się on w haśle, ale na innej pozycji - drugiej.
+<br>Nie otrzymuje się białej pineski za kolor pomarańczowy na pozycji drugiej, ponieważ za tę pozycję w haśle już została przyznana czarna pineska.

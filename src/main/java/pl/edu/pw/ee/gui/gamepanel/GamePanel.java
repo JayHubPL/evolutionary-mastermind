@@ -2,6 +2,7 @@ package pl.edu.pw.ee.gui.gamepanel;
 
 import pl.edu.pw.ee.game.GameVariant;
 import pl.edu.pw.ee.game.MastermindGame;
+import pl.edu.pw.ee.gui.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,8 @@ import java.util.List;
 
 public class GamePanel extends JPanel {
 
-    public static final Color[] COLORS = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.ORANGE, Color.PINK};
+    public static final String NAME_CLASSIC = "GAME_PANEL_CLASSIC";
+    public static final String NAME_DELUXE = "GAME_PANEL_DELUXE";
 
     private final MastermindGame game;
     private final GuessHistoryPanel guessHistoryPanel;
@@ -22,7 +24,7 @@ public class GamePanel extends JPanel {
 
         setLayout(new BorderLayout());
 
-        add(new InputPanel(this, gameVariant), BorderLayout.NORTH);
+        add(new GameInputPanel(this, gameVariant), BorderLayout.NORTH);
         add(guessHistoryPanel, BorderLayout.CENTER);
     }
 
@@ -41,6 +43,6 @@ public class GamePanel extends JPanel {
     }
 
     public void finishGame() {
-        ((GameCard) getParent()).reset();
+        ((MainFrame.MainPanel) getParent()).showCard(RulesPanel.NAME);
     }
 }

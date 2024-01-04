@@ -6,6 +6,7 @@ import pl.edu.pw.ee.gui.utils.GuiUtils;
 import pl.edu.pw.ee.gui.utils.SpinnerWithLabel;
 import pl.edu.pw.ee.simulation.SimulationRunner;
 import pl.edu.pw.ee.simulation.SimulationRunnerFactory;
+import pl.edu.pw.ee.utils.ResourceUtils;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -15,6 +16,7 @@ import java.util.concurrent.CancellationException;
 @Slf4j
 public class SimulatorConfigurationPanel extends JPanel {
 
+    private static final String startIconResourceName = "icons/start.png";
     private final SpinnerWithLabel numberOfSimulationsSpinnerWithLabel;
     @Getter
     private SimulationRunner simulationRunner = null;
@@ -25,6 +27,7 @@ public class SimulatorConfigurationPanel extends JPanel {
 
         numberOfSimulationsSpinnerWithLabel = new SpinnerWithLabel("Liczba symulacji", new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
         var startSimulationButton = new JButton("Rozpocznij symulację");
+        startSimulationButton.setIcon(ResourceUtils.getIcon(startIconResourceName, 20));
         startSimulationButton.addActionListener(e -> {
             if (!parent.areColorInputsValid()) {
                 JOptionPane.showMessageDialog(this, """

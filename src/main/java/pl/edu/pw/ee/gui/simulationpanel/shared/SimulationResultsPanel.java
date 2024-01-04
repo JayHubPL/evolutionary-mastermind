@@ -7,7 +7,6 @@ import pl.edu.pw.ee.gui.utils.ValueWithLabel;
 import pl.edu.pw.ee.simulation.SimulationResults;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -39,7 +38,6 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
         numberOfFailsValueWithLabel = new ValueWithLabel("Liczba przegranych gier");
 
         simulationsComboBox = new JComboBox<>();
-        simulationsComboBox.setBorder(new EmptyBorder(5, 5, 5, 5));
         simulationsComboBox.addItemListener(this);
         simulationsComboBox.setVisible(false);
 
@@ -54,7 +52,9 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
         add(winPercentageValueWithLabel, gbc);
         add(numberOfWinsValueWithLabel, gbc);
         add(numberOfFailsValueWithLabel, gbc);
+        add(Box.createVerticalStrut(5), gbc);
         add(simulationsComboBox, gbc);
+        add(Box.createVerticalStrut(5), gbc);
         add(secretCodePanel, gbc);
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 1.0;

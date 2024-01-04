@@ -2,9 +2,12 @@ package pl.edu.pw.ee.gui;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.extras.components.FlatButton;
-import pl.edu.pw.ee.gui.gamepanel.GameCard;
+import pl.edu.pw.ee.game.GameVariant;
+import pl.edu.pw.ee.gui.gamepanel.GamePanel;
+import pl.edu.pw.ee.gui.gamepanel.RulesPanel;
 import pl.edu.pw.ee.gui.simulationpanel.evo.EvoSimulationPanel;
 import pl.edu.pw.ee.gui.simulationpanel.knuth.KnuthSimulationPanel;
+import pl.edu.pw.ee.gui.utils.NonClosingCheckBoxMenuItem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,16 +15,18 @@ import java.awt.*;
 public class MainFrame extends JFrame {
 
     private final MainPanel mainPanel;
+    private final NonClosingCheckBoxMenuItem duplicatesAllowedCheckboxMenuItem;
 
     public MainFrame() {
         mainPanel = new MainPanel();
+        duplicatesAllowedCheckboxMenuItem = new NonClosingCheckBoxMenuItem("Dozwolone powtórzenia w haśle", true);
 
         setName("Evolutionary Mastermind");
         setTitle("Evolutionary Mastermind");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(true);
+        setResizable(false);
         setLayout(new BorderLayout());
-        setSize(1000, 800);
+        setSize(710, 800);
 
         initializeMenuBar();
 
@@ -38,9 +43,18 @@ public class MainFrame extends JFrame {
         JMenuBar mainMenuBar = new JMenuBar();
 
         JMenu gameMenu = new JMenu("Gra");
-        JMenuItem gameMenuItem = new JMenuItem("Zasady");
-        gameMenu.add(gameMenuItem);
-        gameMenuItem.addActionListener(e -> mainPanel.showCard(GameCard.NAME));
+        JMenuItem rulesMenuItem = new JMenuItem("Zasady");
+        gameMenu.add(rulesMenuItem);
+        rulesMenuItem.addActionListener(e -> mainPanel.showCard(RulesPanel.NAME));
+        gameMenu.add(new JSeparator());
+        var classicGameMenuItem = new JMenuItem("Classic");
+        classicGameMenuItem.addActionListener(e -> mainPanel.showCard(GamePanel.NAME_CLASSIC));
+        gameMenu.add(classicGameMenuItem);
+        var deluxeGameMenuItem = new JMenuItem("Deluxe");
+        deluxeGameMenuItem.addActionListener(e -> mainPanel.showCard(GamePanel.NAME_DELUXE));
+        gameMenu.add(deluxeGameMenuItem);
+        gameMenu.add(new JSeparator());
+        gameMenu.add(duplicatesAllowedCheckboxMenuItem);
         mainMenuBar.add(gameMenu);
 
         JMenu simulatorManu = new JMenu("Symulator");
@@ -70,18 +84,31 @@ public class MainFrame extends JFrame {
         setJMenuBar(mainMenuBar);
     }
 
-    static class MainPanel extends JPanel {
+    public class MainPanel extends JPanel {
+
+        private GamePanel gamePanel;
 
         MainPanel() {
             setLayout(new CardLayout());
 
-            add(new GameCard(), GameCard.NAME);
+            add(new RulesPanel(this), RulesPanel.NAME);
             add(new EvoSimulationPanel(), EvoSimulationPanel.NAME);
             add(new KnuthSimulationPanel(), KnuthSimulationPanel.NAME);
         }
 
-        void showCard(String cardName) {
+        public void showCard(String cardName, boolean duplicatesAllowed) {
+            if (cardName.equals(GamePanel.NAME_CLASSIC) || cardName.equals(GamePanel.NAME_DELUXE)) {
+                if (gamePanel != null) {
+                    remove(gamePanel);
+                }
+                gamePanel = new GamePanel(cardName.equals(GamePanel.NAME_CLASSIC) ? GameVariant.classic(duplicatesAllowed) : GameVariant.deluxe(duplicatesAllowed));
+                add(gamePanel, cardName);
+            }
             ((CardLayout) getLayout()).show(this, cardName);
+        }
+
+        public void showCard(String cardName) {
+            showCard(cardName, duplicatesAllowedCheckboxMenuItem.isSelected());
         }
 
     }

@@ -1,8 +1,8 @@
 package pl.edu.pw.ee.gui.simulationpanel.shared;
 
 import pl.edu.pw.ee.game.Code;
-import pl.edu.pw.ee.gui.gamepanel.GamePanel;
 import pl.edu.pw.ee.gui.utils.ColorDot;
+import pl.edu.pw.ee.gui.utils.ColorPalette;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
 
 import javax.swing.*;
@@ -26,7 +26,7 @@ public class SecretCodePanel extends JPanel {
     public void setSecretCode(Code secretCode) {
         wrapper.removeAll();
         for (var codePin : secretCode) {
-            wrapper.add(new ColorDot(GamePanel.COLORS[codePin.getIndex()], 40));
+            wrapper.add(new ColorDot(ColorPalette.fromIndex(codePin.getIndex()), 40));
         }
         setMinimumSize(new Dimension(Integer.MAX_VALUE, getPreferredSize().height));
         GuiUtils.revalidateAndRepaintLater(this);

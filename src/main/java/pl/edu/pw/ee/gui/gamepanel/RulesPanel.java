@@ -1,18 +1,21 @@
 package pl.edu.pw.ee.gui.gamepanel;
 
-import pl.edu.pw.ee.game.GameVariant;
+import pl.edu.pw.ee.gui.MainFrame;
 import pl.edu.pw.ee.gui.utils.MarkdownToHTMLConverter;
-import pl.edu.pw.ee.utils.FileReader;
+import pl.edu.pw.ee.utils.ResourceUtils;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class RulesPanel extends JPanel {
 
-    private static final String rulesHtmlText = MarkdownToHTMLConverter.convert(FileReader.readResourceFile("markdown/rules.md")
-            .replace("$example.jpg$", FileReader.getResourceURL("icons/example.jpg").toString()));
+    public static final String NAME = "RULES";
 
-    public RulesPanel(GameCard gameCard) {
+    private static final String rulesHtmlText = MarkdownToHTMLConverter.convert(ResourceUtils.readResourceFile("markdown/rules.md")
+            .replace("$example_secret.png$", ResourceUtils.getResourceURL("images/example_secret.png").toString())
+            .replace("$example_guess.png$", ResourceUtils.getResourceURL("images/example_guess.png").toString()));
+
+    public RulesPanel(MainFrame.MainPanel parent) {
         setLayout(new BorderLayout());
 
         var textPane = new JTextPane();
@@ -31,16 +34,16 @@ public class RulesPanel extends JPanel {
 
         var font = new Font("Segoe UI", Font.BOLD, 20);
         var buttonFont = font.deriveFont(Font.PLAIN);
-        var chooseVariantLabel = new JLabel("Wybierz wariant gry aby rozpocząć: ");
+        var chooseVariantLabel = new JLabel("Rozpocznij grę:");
         chooseVariantLabel.setFont(font);
-        var duplicatesCheckBox = new JCheckBox("Dozwolone powtórzenia kolorów w haśle");
+        var duplicatesCheckBox = new JCheckBox("Dozwolone powtórzenia w haśle", true);
         duplicatesCheckBox.setFont(buttonFont);
         var classicVersionButton = new JButton("Classic");
         classicVersionButton.setFont(buttonFont);
-        classicVersionButton.addActionListener(e -> gameCard.setContents(new GamePanel(GameVariant.classic(duplicatesCheckBox.isSelected()))));
+        classicVersionButton.addActionListener(e -> parent.showCard(GamePanel.NAME_CLASSIC, duplicatesCheckBox.isSelected()));
         var deluxeVersionButton = new JButton("Deluxe");
         deluxeVersionButton.setFont(buttonFont);
-        deluxeVersionButton.addActionListener(e -> gameCard.setContents(new GamePanel(GameVariant.deluxe(duplicatesCheckBox.isSelected()))));
+        deluxeVersionButton.addActionListener(e -> parent.showCard(GamePanel.NAME_DELUXE, duplicatesCheckBox.isSelected()));
 
         panelWithInputs.add(chooseVariantLabel);
         panelWithInputs.add(Box.createHorizontalStrut(5));

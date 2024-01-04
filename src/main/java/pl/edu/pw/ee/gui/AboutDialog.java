@@ -1,9 +1,10 @@
 package pl.edu.pw.ee.gui;
 
 import lombok.EqualsAndHashCode;
+import lombok.SneakyThrows;
 import lombok.Value;
 import pl.edu.pw.ee.gui.utils.MarkdownToHTMLConverter;
-import pl.edu.pw.ee.utils.FileReader;
+import pl.edu.pw.ee.utils.ResourceUtils;
 
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
@@ -14,7 +15,7 @@ import java.awt.*;
 @EqualsAndHashCode(callSuper = false)
 public class AboutDialog extends JDialog implements HyperlinkListener {
 
-    private static final String infoHtmlText = MarkdownToHTMLConverter.convert(FileReader.readResourceFile("markdown/about.md"));
+    private static final String infoHtmlText = MarkdownToHTMLConverter.convert(ResourceUtils.readResourceFile("markdown/about.md"));
 
     public AboutDialog(JFrame parent) {
         super(parent, "O programie", true);
@@ -39,14 +40,11 @@ public class AboutDialog extends JDialog implements HyperlinkListener {
     }
 
     @Override
+    @SneakyThrows
     public void hyperlinkUpdate(HyperlinkEvent e) {
         if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
             if (Desktop.isDesktopSupported()) {
-                try {
-                    Desktop.getDesktop().browse(e.getURL().toURI());
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                Desktop.getDesktop().browse(e.getURL().toURI());
             }
         }
     }
