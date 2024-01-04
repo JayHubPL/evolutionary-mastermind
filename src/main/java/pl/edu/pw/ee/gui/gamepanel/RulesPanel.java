@@ -55,7 +55,10 @@ public class RulesPanel extends JPanel {
 
         panelWithInputs.setPreferredSize(new Dimension(Integer.MAX_VALUE, 60));
 
-        add(new JScrollPane(textPane), BorderLayout.CENTER);
+        var scrollPane = new JScrollPane(textPane);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
+        add(scrollPane, BorderLayout.CENTER);
         add(panelWithInputs, BorderLayout.SOUTH);
     }
 

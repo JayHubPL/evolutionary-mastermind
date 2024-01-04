@@ -12,11 +12,11 @@
 12. [x] Dodanie implementacji Knutha
 13. [x] Refactor SimulationRunner aby obsługiwał wszyskie rodzaje algorytmów
 14. [x] Dodanie informacji o programie
-15. [ ] Dodanie zasad gry Mastermind
+15. [x] Dodanie zasad gry Mastermind
 16. [x] Eksperymenty z przyspieszeniem wielowątkowowych operacji
-17. [ ] Dodanie możlwiości eksportowania wyników i parametrów symulacji do JSON/CSV
+17. [x] Dodanie możlwiości eksportowania wyników i parametrów symulacji do JSON/CSV
 18. [x] Dodanie panelu dla Knutha
 19. [x] Refactor paneli z konfiguracją i wynikami symulacji aby działay dla każdego typu algorytmu
 20. [x] Dodanie kolejnych implementacji operatorów do evo
-21. [ ] Dodanie do menu Gra opcji przenoszących bezpośrednio do panelu gry (z wyborem wariantu)
+21. [x] Dodanie do menu Gra opcji przenoszących bezpośrednio do panelu gry (z wyborem wariantu)
 22. [ ] Wersja na Java 8

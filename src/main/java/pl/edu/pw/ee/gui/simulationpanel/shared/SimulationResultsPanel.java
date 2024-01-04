@@ -1,5 +1,6 @@
 package pl.edu.pw.ee.gui.simulationpanel.shared;
 
+import lombok.Getter;
 import pl.edu.pw.ee.gui.gamepanel.GuessHistoryPanel;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
 import pl.edu.pw.ee.gui.utils.ProgressListener;
@@ -23,7 +24,7 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
     private final SecretCodePanel secretCodePanel;
     private final GuessHistoryPanel guessHistoryPanel;
     private final Component verticalGlue = Box.createVerticalGlue();
-
+    @Getter
     private SimulationResults lastSimulationResults = null;
 
     public SimulationResultsPanel() {
