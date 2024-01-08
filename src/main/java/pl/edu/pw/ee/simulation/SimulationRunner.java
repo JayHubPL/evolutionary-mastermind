@@ -1,23 +1,13 @@
 package pl.edu.pw.ee.simulation;
 
 import lombok.RequiredArgsConstructor;
-import pl.edu.pw.ee.game.Code;
-import pl.edu.pw.ee.game.CodeBreaker;
-import pl.edu.pw.ee.game.CodeMaker;
-import pl.edu.pw.ee.game.GameResults;
-import pl.edu.pw.ee.game.GameVariant;
-import pl.edu.pw.ee.game.MastermindGame;
+import pl.edu.pw.ee.game.*;
 import pl.edu.pw.ee.gui.utils.ProgressListener;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorCompletionService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 @RequiredArgsConstructor
 public abstract class SimulationRunner extends SwingWorker<SimulationResults, Void> {
@@ -35,6 +25,7 @@ public abstract class SimulationRunner extends SwingWorker<SimulationResults, Vo
                 100L, TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<>());
         var completionService = new ExecutorCompletionService<GameResults>(executorService);
+        var startTime = System.currentTimeMillis();
         for (int i = 0; i < numberOfSimulations; i++) {
             completionService.submit(createSimulation());
         }
@@ -47,8 +38,9 @@ public abstract class SimulationRunner extends SwingWorker<SimulationResults, Vo
                 throw new RuntimeException("Simulation results cannot be obtained", e);
             }
         }
+        var finishTime = System.currentTimeMillis();
         executorService.shutdown();
-        return new SimulationResults(results);
+        return new SimulationResults(results, finishTime - startTime);
     }
 
     @Override

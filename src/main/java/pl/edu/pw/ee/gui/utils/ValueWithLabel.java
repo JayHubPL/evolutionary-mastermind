@@ -10,13 +10,22 @@ public class ValueWithLabel extends JPanel {
 
     private final JFormattedTextField formattedTextField;
 
-    public ValueWithLabel(String text, Format format, Object initialValue) {
+    public ValueWithLabel(String text, JFormattedTextField.AbstractFormatter formatter) {
+        this(text, new JFormattedTextField(formatter), null);
+    }
+
+    private ValueWithLabel(String text, Format format, Object initialValue) {
+        this(text, new JFormattedTextField(format), initialValue);
+    }
+
+    private ValueWithLabel(String text, JFormattedTextField formattedTextField, Object initialValue) {
         var layout = new GroupLayout(this);
         setLayout(layout);
         setBorder(new EmptyBorder(5, 5, 0, 5));
+        setFocusable(false);
 
         var label = new JLabel(text);
-        formattedTextField = new JFormattedTextField(format);
+        this.formattedTextField = formattedTextField;
         formattedTextField.setHorizontalAlignment(JFormattedTextField.CENTER);
         formattedTextField.setEditable(false);
         if (initialValue != null) {

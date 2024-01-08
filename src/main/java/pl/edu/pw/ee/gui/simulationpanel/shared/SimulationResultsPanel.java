@@ -4,6 +4,7 @@ import lombok.Getter;
 import pl.edu.pw.ee.gui.gamepanel.GuessHistoryPanel;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
 import pl.edu.pw.ee.gui.utils.ProgressListener;
+import pl.edu.pw.ee.gui.utils.TimeFormatter;
 import pl.edu.pw.ee.gui.utils.ValueWithLabel;
 import pl.edu.pw.ee.simulation.SimulationResults;
 
@@ -20,6 +21,7 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
     private final ValueWithLabel winPercentageValueWithLabel;
     private final ValueWithLabel numberOfWinsValueWithLabel;
     private final ValueWithLabel numberOfFailsValueWithLabel;
+    private final ValueWithLabel simulationTimeValueWithLabel;
     private final JComboBox<String> simulationsComboBox;
     private final SecretCodePanel secretCodePanel;
     private final GuessHistoryPanel guessHistoryPanel;
@@ -37,6 +39,7 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
         winPercentageValueWithLabel = new ValueWithLabel("Procent wygranych gier", percentFormatter);
         numberOfWinsValueWithLabel = new ValueWithLabel("Liczba wygranych gier");
         numberOfFailsValueWithLabel = new ValueWithLabel("Liczba przegranych gier");
+        simulationTimeValueWithLabel = new ValueWithLabel("Czas trwania symulacji", new TimeFormatter());
 
         simulationsComboBox = new JComboBox<>();
         simulationsComboBox.addItemListener(this);
@@ -53,6 +56,7 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
         add(winPercentageValueWithLabel, gbc);
         add(numberOfWinsValueWithLabel, gbc);
         add(numberOfFailsValueWithLabel, gbc);
+        add(simulationTimeValueWithLabel, gbc);
         add(Box.createVerticalStrut(5), gbc);
         add(simulationsComboBox, gbc);
         add(Box.createVerticalStrut(5), gbc);
@@ -72,6 +76,7 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
         winPercentageValueWithLabel.setValue((double) lastSimulationResults.getNumberOfWins() / numberOfSimulations);
         numberOfWinsValueWithLabel.setValue(lastSimulationResults.getNumberOfWins());
         numberOfFailsValueWithLabel.setValue(lastSimulationResults.getNumberOfFails());
+        simulationTimeValueWithLabel.setValue(lastSimulationResults.getTime());
 
         simulationsComboBox.removeAllItems();
         for (int i = 0; i < numberOfSimulations; i++) {

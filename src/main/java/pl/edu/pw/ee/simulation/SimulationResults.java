@@ -14,8 +14,10 @@ public class SimulationResults {
     int numberOfWins;
     int numberOfFails;
     double averageGuessCount;
+    long time;
 
-    public SimulationResults(List<GameResults> gameResults) {
+    public SimulationResults(List<GameResults> gameResults, long time) {
+        this.time = time;
         individualGameResults = gameResults;
         numberOfWins = (int) gameResults.stream()
                 .filter(gr -> gr.getGameState() == GameResults.GameState.GUESSED_SECRET_CODE)
