@@ -87,7 +87,7 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
             var gameResults = lastSimulationResults.getIndividualGameResults().get(i);
             var attemptDeclinationString = switch (gameResults.getNumberOfAttempts()) {
                 case 1 -> "próba";
-                case 2 | 3 | 4 -> "próby";
+                case 2, 3, 4 -> "próby";
                 default -> "prób";
             };
             simulationsComboBox.addItem(String.format("Symulacja #%d: %d %s", i + 1, gameResults.getNumberOfAttempts(), attemptDeclinationString));
