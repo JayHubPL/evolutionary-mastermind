@@ -26,6 +26,7 @@ public class ValueWithLabel extends JPanel {
 
         var label = new JLabel(text);
         this.formattedTextField = formattedTextField;
+        this.formattedTextField.setFocusable(false);
         formattedTextField.setHorizontalAlignment(JFormattedTextField.CENTER);
         formattedTextField.setEditable(false);
         if (initialValue != null) {

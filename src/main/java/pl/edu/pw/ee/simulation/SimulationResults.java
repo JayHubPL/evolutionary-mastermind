@@ -14,6 +14,7 @@ public class SimulationResults {
     int numberOfWins;
     int numberOfFails;
     double averageGuessCount;
+    int maxGuessCount;
     long time;
 
     public SimulationResults(List<GameResults> gameResults, long time) {
@@ -26,6 +27,9 @@ public class SimulationResults {
         averageGuessCount = gameResults.stream()
                 .mapToInt(GameResults::getNumberOfAttempts)
                 .average().orElse(0.0);
+        maxGuessCount = gameResults.stream()
+                .mapToInt(GameResults::getNumberOfAttempts)
+                .max().orElse(-1);
     }
 
     public List<String[]> toCsvData() {

@@ -18,6 +18,7 @@ import java.text.NumberFormat;
 public class SimulationResultsPanel extends JPanel implements ProgressListener, ItemListener {
 
     private final ValueWithLabel averageGuessCountValueWithLabel;
+    private final ValueWithLabel maxGuessCountValueWithLabel;
     private final ValueWithLabel winPercentageValueWithLabel;
     private final ValueWithLabel numberOfWinsValueWithLabel;
     private final ValueWithLabel numberOfFailsValueWithLabel;
@@ -33,7 +34,8 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
         setLayout(new GridBagLayout());
         setBorder(new TitledBorder("Wyniki symulacji"));
 
-        averageGuessCountValueWithLabel = new ValueWithLabel("Średnia liczba prób odgadnięcia hasła");
+        averageGuessCountValueWithLabel = new ValueWithLabel("Średnia liczba prób");
+        maxGuessCountValueWithLabel = new ValueWithLabel("Maksymalna liczba prób");
         var percentFormatter = NumberFormat.getPercentInstance();
         percentFormatter.setMaximumFractionDigits(2);
         winPercentageValueWithLabel = new ValueWithLabel("Procent wygranych gier", percentFormatter);
@@ -53,6 +55,7 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
 
         var gbc = GuiUtils.getListConstraints();
         add(averageGuessCountValueWithLabel, gbc);
+        add(maxGuessCountValueWithLabel, gbc);
         add(winPercentageValueWithLabel, gbc);
         add(numberOfWinsValueWithLabel, gbc);
         add(numberOfFailsValueWithLabel, gbc);
@@ -73,6 +76,7 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
         var numberOfSimulations = lastSimulationResults.getIndividualGameResults().size();
 
         averageGuessCountValueWithLabel.setValue(lastSimulationResults.getAverageGuessCount());
+        maxGuessCountValueWithLabel.setValue(lastSimulationResults.getMaxGuessCount());
         winPercentageValueWithLabel.setValue((double) lastSimulationResults.getNumberOfWins() / numberOfSimulations);
         numberOfWinsValueWithLabel.setValue(lastSimulationResults.getNumberOfWins());
         numberOfFailsValueWithLabel.setValue(lastSimulationResults.getNumberOfFails());
