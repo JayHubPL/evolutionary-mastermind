@@ -4,7 +4,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,9 +38,7 @@ public class Code implements Iterable<Color> {
         int blackPins = 0;
         int whitePins = 0;
         boolean[] matched = new boolean[length()];
-        Arrays.fill(matched, false);
         int[] colorCounts = new int[numberOfColors()];
-        Arrays.fill(colorCounts, 0);
         for (var color : codeSequence) {
             colorCounts[color.getIndex()]++;
         }

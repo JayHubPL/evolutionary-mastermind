@@ -12,17 +12,20 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class KnuthAlgorithm implements CodeBreaker {
 
     private final Code initialGuess;
     private final List<Code> allCombinations;
     private final List<Code> possibleCodes;
+    private final HashMap<Score, Integer> queryPartitionClassCounts;
 
     public KnuthAlgorithm(GameVariant gameVariant, Code initialGuess) {
         this.initialGuess = initialGuess;
         allCombinations = CodePoolGenerator.getAllPossibleCodes(gameVariant);
         possibleCodes = new ArrayList<>(allCombinations);
+        queryPartitionClassCounts = new HashMap<>(32);
     }
 
     @Override
@@ -35,15 +38,16 @@ public class KnuthAlgorithm implements CodeBreaker {
         if (possibleCodes.size() == 1) {
             return possibleCodes.get(0);
         }
-        return allCombinations.stream()
-                .map(code -> Pair.of(code, calculateMaximumPartitionSize(code, possibleCodes)))
-                .min(Comparator.<Pair<Code, Integer>, Integer>comparing(Pair::getSecond).thenComparing(p -> p.getFirst().toString()))
-                .map(Pair::getFirst)
-                .orElseThrow();
+        PriorityQueue<Pair<Code, Integer>> queue = new PriorityQueue<>(Comparator.<Pair<Code, Integer>, Integer>comparing(Pair::getSecond).thenComparing(p -> p.getFirst().toString()));
+        for (Code code : allCombinations) {
+            int maxPartitionSize = calculateMaximumPartitionSize(code, possibleCodes);
+            queue.add(Pair.of(code, maxPartitionSize));
+        }
+        return queue.element().getFirst();
     }
 
     private int calculateMaximumPartitionSize(Code code, List<Code> possibleCodes) {
-        var queryPartitionClassCounts = new HashMap<Score, Integer>();
+        queryPartitionClassCounts.clear();
         for (var possibleCode : possibleCodes) {
             var relativeScore = possibleCode.compareTo(code);
             queryPartitionClassCounts.put(relativeScore, queryPartitionClassCounts.getOrDefault(relativeScore, 0) + 1);
