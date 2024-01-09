@@ -8,23 +8,24 @@ import pl.edu.pw.ee.game.Score;
 import pl.edu.pw.ee.utils.CodePoolGenerator;
 import pl.edu.pw.ee.utils.Pair;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 public class KnuthAlgorithm implements CodeBreaker {
 
     private final Code initialGuess;
     private final List<Code> allCombinations;
-    private final List<Code> possibleCodes;
+    private final Set<Code> possibleCodes;
     private final HashMap<Score, Integer> queryPartitionClassCounts;
 
     public KnuthAlgorithm(GameVariant gameVariant, Code initialGuess) {
         this.initialGuess = initialGuess;
         allCombinations = CodePoolGenerator.getAllPossibleCodes(gameVariant);
-        possibleCodes = new ArrayList<>(allCombinations);
+        possibleCodes = new HashSet<>(allCombinations);
         queryPartitionClassCounts = new HashMap<>(32);
     }
 
@@ -36,17 +37,25 @@ public class KnuthAlgorithm implements CodeBreaker {
         var lastGuess = gameState.getPreviousAttempts().get(gameState.getPreviousAttempts().size() - 1);
         possibleCodes.removeIf(possibleCode -> !possibleCode.compareTo(lastGuess.getCode()).equals(lastGuess.getScore()));
         if (possibleCodes.size() == 1) {
-            return possibleCodes.get(0);
+            return possibleCodes.stream().findFirst().get();
         }
-        PriorityQueue<Pair<Code, Integer>> queue = new PriorityQueue<>(Comparator.<Pair<Code, Integer>, Integer>comparing(Pair::getSecond).thenComparing(p -> p.getFirst().toString()));
-        for (Code code : allCombinations) {
+        var queue = new PriorityQueue<>(Comparator.<Pair<Code, Integer>, Integer>comparing(Pair::getSecond).thenComparing(p -> p.getFirst().toString()));
+        var cheatModeEnabled = allCombinations.size() > 1296; // not the classic variant, let's speed things up (no more five-guess guarantee)
+        for (Code code : (cheatModeEnabled ? possibleCodes : allCombinations)) {
             int maxPartitionSize = calculateMaximumPartitionSize(code, possibleCodes);
             queue.add(Pair.of(code, maxPartitionSize));
         }
-        return queue.element().getFirst();
+        var bestMinMaxGuess = queue.element();
+        for (var head = queue.poll(); head != null && head.second.equals(bestMinMaxGuess.second); head = queue.poll()) {
+            var guessCode = head.first;
+            if (possibleCodes.contains(guessCode)) {
+                return guessCode;
+            }
+        }
+        return bestMinMaxGuess.first;
     }
 
-    private int calculateMaximumPartitionSize(Code code, List<Code> possibleCodes) {
+    private int calculateMaximumPartitionSize(Code code, Set<Code> possibleCodes) {
         queryPartitionClassCounts.clear();
         for (var possibleCode : possibleCodes) {
             var relativeScore = possibleCode.compareTo(code);
