@@ -40,6 +40,10 @@ public class EvoAlgorithm implements CodeBreaker {
                 .collect(Collectors.toCollection(LinkedList::new));
         // mutate
         offsprings.forEach(offspring -> config.getMutator().mutate(offspring));
+        // if population size should be odd, add first specimen from selected
+        if (offsprings.size() != population.size()) {
+            offsprings.add(selected.get(0));
+        }
         population = offsprings;
         // evaluate
         config.getEvaluator().evaluate(population, gameState);

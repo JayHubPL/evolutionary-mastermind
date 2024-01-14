@@ -12,8 +12,8 @@ public class ConsecutivePairMatcher implements PairMatcher {
     @Override
     public List<Pair<Specimen, Specimen>> pair(List<Specimen> specimens) {
         var pairs = new LinkedList<Pair<Specimen, Specimen>>();
-        for (int i = 0; i < specimens.size(); i += 2) {
-            pairs.add(Pair.of(specimens.get(i), specimens.get((i + 1) % specimens.size())));
+        for (int i = 1; i < specimens.size(); i += 2) {
+            pairs.add(Pair.of(specimens.get(i - 1), specimens.get(i)));
         }
         return pairs;
     }

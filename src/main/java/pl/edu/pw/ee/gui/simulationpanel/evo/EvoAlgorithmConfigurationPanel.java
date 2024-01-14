@@ -32,6 +32,7 @@ public class EvoAlgorithmConfigurationPanel extends JPanel implements ItemListen
     private final ComboBoxWithLabel<String> pairMatcherComboBoxWithLabel;
     private final ComboBoxWithLabel<String> scalerComboBoxWithLabel;
     private final SpinnerWithLabel mutationChanceSpinnerWithLabel;
+    private final SpinnerWithLabel crossingProbabilitySpinnerWithLabel;
 
     // Optional parameter inputs
     private final SpinnerWithLabel multiplicationFactorSpinnerWithLabel;
@@ -53,11 +54,12 @@ public class EvoAlgorithmConfigurationPanel extends JPanel implements ItemListen
                 "Ruletka", "Turniej", "Rangi", "Losowa"
         )));
         selectorComboBoxWithLabel.addItemListener(this);
+        crossingProbabilitySpinnerWithLabel = new SpinnerWithLabel("Prawdopodobieństwo krzyżowania", new SpinnerNumberModel(.98, 0., 1., 0.01));
         pairMatcherComboBoxWithLabel = new ComboBoxWithLabel<>("Metoda doboru partnerów", new Vector<>(List.of(
                 "Po kolei", "Losowa"
         )));
         pairMatcherComboBoxWithLabel.addItemListener(this);
-        mutationChanceSpinnerWithLabel = new SpinnerWithLabel("Szansa na mutację", new SpinnerNumberModel(0.01, 0.0, 1.0, 0.001));
+        mutationChanceSpinnerWithLabel = new SpinnerWithLabel("Prawdopodobieństwo mutacji", new SpinnerNumberModel(0.01, 0.0, 1.0, 0.001));
 
         multiplicationFactorSpinnerWithLabel = new SpinnerWithLabel("Współczynnik zwielokrotnienia", new SpinnerNumberModel(2., 0., 3., 0.01));
         multiplicationFactorSpinnerWithLabel.setVisible(false);
@@ -72,6 +74,7 @@ public class EvoAlgorithmConfigurationPanel extends JPanel implements ItemListen
         add(multiplicationFactorSpinnerWithLabel);
         add(selectorComboBoxWithLabel);
         add(tournamentSizeSpinnerWithLabel);
+        add(crossingProbabilitySpinnerWithLabel);
         add(pairMatcherComboBoxWithLabel);
         add(pairMatcherRepetitionsAllowedCheckBoxWithLabel);
         add(mutationChanceSpinnerWithLabel);
@@ -91,7 +94,7 @@ public class EvoAlgorithmConfigurationPanel extends JPanel implements ItemListen
     @Override
     public void stateChanged(ChangeEvent e) {
         if (e.getSource().equals(populationSizeSpinnerWithLabel.getSpinner())) {
-            var currentTournamentSize = (int) tournamentSizeSpinnerWithLabel.getSpinner().getValue();
+            var currentTournamentSize = (int) tournamentSizeSpinnerWithLabel.getValue();
             currentTournamentSize = Math.min(getPopulationSize(), currentTournamentSize);
             tournamentSizeSpinnerWithLabel.getSpinner().setModel(new SpinnerNumberModel(currentTournamentSize, 2, getPopulationSize(), 1));
         }
@@ -102,23 +105,27 @@ public class EvoAlgorithmConfigurationPanel extends JPanel implements ItemListen
     }
 
     public int getPopulationSize() {
-        return (int) populationSizeSpinnerWithLabel.getSpinner().getValue();
+        return (int) populationSizeSpinnerWithLabel.getValue();
     }
 
     public double getMutationChance() {
-        return (double) mutationChanceSpinnerWithLabel.getSpinner().getValue();
+        return (double) mutationChanceSpinnerWithLabel.getValue();
+    }
+
+    public double getCrossingProbability() {
+        return (double) crossingProbabilitySpinnerWithLabel.getValue();
     }
 
     public Scaler getScaler() {
         return switch (scalerComboBoxWithLabel.getSelectedItem()) {
-            case "Liniowa" -> new LinearScaler((double) multiplicationFactorSpinnerWithLabel.getSpinner().getValue());
+            case "Liniowa" -> new LinearScaler((double) multiplicationFactorSpinnerWithLabel.getValue());
             default -> new NoScaler();
         };
     }
 
     public Selector getSelector() {
         return switch (selectorComboBoxWithLabel.getSelectedItem()) {
-            case "Turniej" -> new TournamentSelector((int) tournamentSizeSpinnerWithLabel.getSpinner().getValue());
+            case "Turniej" -> new TournamentSelector((int) tournamentSizeSpinnerWithLabel.getValue());
             case "Ruletka" -> new UnbalancedRouletteSelector();
             case "Rangi" -> new RankBasedSelector(getPopulationSize());
             default -> new RandomSelector();

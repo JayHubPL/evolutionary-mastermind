@@ -20,6 +20,7 @@ public class SimulationConfig {
     Code secretCode;
     boolean initialPopulationDuplicatesAllowed;
     double mutationChance;
+    double crossingProbability;
     Scaler scaler;
     Selector selector;
     PairMatcher pairMatcher;

@@ -25,7 +25,7 @@ public class EvoAlgorithmTest {
                 .scaler(new NoScaler())
                 .selector(new UnbalancedRouletteSelector())
                 .pairMatcher(new ConsecutivePairMatcher())
-                .crosser(new OnePointSplitCrosser(gameVariant))
+                .crosser(new OnePointSplitCrosser(gameVariant, 0.9))
                 .mutator(new ValueShiftMutator(gameVariant, 0.01))
                 .build();
         var evo = new EvoAlgorithm(config);

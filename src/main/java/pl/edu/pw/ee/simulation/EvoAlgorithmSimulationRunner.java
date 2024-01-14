@@ -33,7 +33,7 @@ public class EvoAlgorithmSimulationRunner extends SimulationRunner {
                 .scaler(simulationConfig.getScaler())
                 .selector(simulationConfig.getSelector())
                 .pairMatcher(new ConsecutivePairMatcher())
-                .crosser(new OnePointSplitCrosser(gameVariant))
+                .crosser(new OnePointSplitCrosser(gameVariant, simulationConfig.getCrossingProbability()))
                 .mutator(new ValueShiftMutator(gameVariant, simulationConfig.getMutationChance()))
                 .build();
         return new Simulation(gameVariant, new EvoAlgorithm(evoAlgorithmConfig), simulationConfig.getSecretCode().orElse(new Code(gameVariant)));

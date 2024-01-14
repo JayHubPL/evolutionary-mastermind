@@ -16,7 +16,7 @@ public class UnbalancedRouletteSelector implements Selector {
         double totalFitness = population.stream()
                 .map(Specimen::getFitness)
                 .mapToDouble(Double::doubleValue)
-                .sum();
+                .sum() + Double.MIN_VALUE;
         var probabilities = population.stream()
                 .map(specimen -> specimen.getFitness() / totalFitness)
                 .toList();

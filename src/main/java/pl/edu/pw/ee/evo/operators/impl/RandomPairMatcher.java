@@ -20,7 +20,7 @@ public class RandomPairMatcher implements PairMatcher {
     public List<Pair<Specimen, Specimen>> pair(List<Specimen> specimens) {
         if (repetitionsAllowed) {
             var pairs = new LinkedList<Pair<Specimen, Specimen>>();
-            for (int i = 0; i < specimens.size(); i++) {
+            while (pairs.size() < specimens.size() >> 1) {
                 var firstParentIndex = random.nextInt(specimens.size());
                 var secondParentIndex = random.nextInt(specimens.size());
                 while (firstParentIndex == secondParentIndex) {

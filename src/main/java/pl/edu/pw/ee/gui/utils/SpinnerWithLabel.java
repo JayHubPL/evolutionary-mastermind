@@ -25,4 +25,8 @@ public class SpinnerWithLabel extends JPanel {
         add(spinner);
     }
 
+    public Number getValue() {
+        return (Number) getSpinner().getValue();
+    }
+
 }

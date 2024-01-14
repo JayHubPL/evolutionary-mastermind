@@ -16,9 +16,13 @@ public class OnePointSplitCrosser implements Crosser {
 
     private static final Random random = new Random();
     private final GameVariant gameVariant;
+    private final double crossingProbability;
 
     @Override
     public List<Specimen> cross(Pair<Specimen, Specimen> pair) {
+        if (random.nextDouble() > crossingProbability) {
+            return List.of(pair.first, pair.second);
+        }
         int splitIndex = random.nextInt(gameVariant.getCodeLength() - 1) + 1;
         var subSeq1 = pair.first.getCodeSequence().subList(0, splitIndex);
         var subSeq2 = pair.second.getCodeSequence().subList(splitIndex, gameVariant.getCodeLength());
