@@ -25,6 +25,7 @@ public class EvoAlgorithmConfigurationInputPanel extends ConfigurationInputAbstr
                 .secretCode(secretCodeConfigPanel.getSecretCode())
                 .initialPopulationDuplicatesAllowed(evoAlgorithmConfigPanel.getUniqueInitialPopulation())
                 .mutationChance(evoAlgorithmConfigPanel.getMutationChance())
+                .scaler(evoAlgorithmConfigPanel.getScaler())
                 .selector(evoAlgorithmConfigPanel.getSelector())
                 .pairMatcher(evoAlgorithmConfigPanel.getPairMatcher())
                 .build();

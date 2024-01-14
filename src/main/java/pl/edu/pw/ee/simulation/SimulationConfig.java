@@ -3,6 +3,7 @@ package pl.edu.pw.ee.simulation;
 import lombok.Builder;
 import lombok.Value;
 import pl.edu.pw.ee.evo.operators.PairMatcher;
+import pl.edu.pw.ee.evo.operators.Scaler;
 import pl.edu.pw.ee.evo.operators.Selector;
 import pl.edu.pw.ee.game.Code;
 import pl.edu.pw.ee.game.GameVariant;
@@ -19,6 +20,7 @@ public class SimulationConfig {
     Code secretCode;
     boolean initialPopulationDuplicatesAllowed;
     double mutationChance;
+    Scaler scaler;
     Selector selector;
     PairMatcher pairMatcher;
 

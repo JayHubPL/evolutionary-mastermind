@@ -17,7 +17,7 @@ public class StandardEvaluator implements Evaluator {
                     .sum());
         }
         var minFitness = population.stream()
-                .mapToInt(Specimen::getFitness)
+                .mapToDouble(Specimen::getFitness)
                 .min().orElseThrow();
         population.forEach(specimen -> specimen.setFitness(specimen.getFitness() - minFitness));
     }

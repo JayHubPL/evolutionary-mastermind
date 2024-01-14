@@ -30,6 +30,7 @@ public class EvoAlgorithmSimulationRunner extends SimulationRunner {
                 .initialPopulationDuplicatesAllowed(simulationConfig.isInitialPopulationDuplicatesAllowed())
                 .populationGenerator(populationGenerator)
                 .evaluator(new StandardEvaluator())
+                .scaler(simulationConfig.getScaler())
                 .selector(simulationConfig.getSelector())
                 .pairMatcher(new ConsecutivePairMatcher())
                 .crosser(new OnePointSplitCrosser(gameVariant))

@@ -13,12 +13,12 @@ public class UnbalancedRouletteSelector implements Selector {
 
     @Override
     public List<Specimen> select(List<Specimen> population) {
-        int totalFitness = population.stream()
+        double totalFitness = population.stream()
                 .map(Specimen::getFitness)
-                .mapToInt(Integer::intValue)
+                .mapToDouble(Double::doubleValue)
                 .sum();
         var probabilities = population.stream()
-                .map(specimen -> specimen.getFitness() / (double) totalFitness)
+                .map(specimen -> specimen.getFitness() / totalFitness)
                 .toList();
         var cumulativeDistribution = ProbabilityUtils.calculateCumulativeDistribution(probabilities);
         return random.doubles(population.size())

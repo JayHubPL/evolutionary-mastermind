@@ -21,13 +21,15 @@ public class EvoAlgorithm implements CodeBreaker {
 
     @Override
     public Code makeGuess(MastermindGame gameState) {
-        if (population == null) {
-            population = config.getPopulationGenerator().generatePopulation(config.getPopulationSize(), config.isInitialPopulationDuplicatesAllowed());
+        if (gameState.getPreviousAttempts().isEmpty()) {
             return config.getInitialGuess();
         }
         if (gameState.getPreviousAttempts().size() == 1) {
+            population = config.getPopulationGenerator().generatePopulation(config.getPopulationSize(), config.isInitialPopulationDuplicatesAllowed());
             config.getEvaluator().evaluate(population, gameState);
         }
+        // scale
+        config.getScaler().scale(population);
         // select
         var selected = config.getSelector().select(population);
         // crossover

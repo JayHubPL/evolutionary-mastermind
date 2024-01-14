@@ -22,6 +22,7 @@ public class EvoAlgorithmTest {
                 .gameVariant(gameVariant)
                 .populationGenerator(new PopulationGenerator(gameVariant))
                 .evaluator(new StandardEvaluator())
+                .scaler(new NoScaler())
                 .selector(new UnbalancedRouletteSelector())
                 .pairMatcher(new ConsecutivePairMatcher())
                 .crosser(new OnePointSplitCrosser(gameVariant))

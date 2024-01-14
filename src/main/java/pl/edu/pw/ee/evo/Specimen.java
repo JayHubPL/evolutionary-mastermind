@@ -4,11 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import pl.edu.pw.ee.game.Code;
 
+@Setter
+@Getter
 public class Specimen extends Code {
 
-    @Getter
-    @Setter
-    private int fitness = 0;
+    private double fitness = 0;
 
     public Specimen(Code code) {
         super(code);
@@ -21,6 +21,6 @@ public class Specimen extends Code {
 
     @Override
     public String toString() {
-        return String.format("%s, fitness=%d", codeSequence, fitness);
+        return String.format("%s, fitness=%.3f", codeSequence, fitness);
     }
 }
