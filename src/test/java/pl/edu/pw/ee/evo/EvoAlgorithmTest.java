@@ -1,7 +1,12 @@
 package pl.edu.pw.ee.evo;
 
 import org.junit.Test;
-import pl.edu.pw.ee.evo.operators.impl.*;
+import pl.edu.pw.ee.evo.operators.impl.ConsecutivePairMatcher;
+import pl.edu.pw.ee.evo.operators.impl.NoScaler;
+import pl.edu.pw.ee.evo.operators.impl.OnePointSplitCrosser;
+import pl.edu.pw.ee.evo.operators.impl.StandardEvaluator;
+import pl.edu.pw.ee.evo.operators.impl.UnbalancedRouletteSelector;
+import pl.edu.pw.ee.evo.operators.impl.ValueShiftMutator;
 import pl.edu.pw.ee.game.Code;
 import pl.edu.pw.ee.game.Color;
 import pl.edu.pw.ee.game.GameVariant;
@@ -26,6 +31,7 @@ public class EvoAlgorithmTest {
                 .selector(new UnbalancedRouletteSelector())
                 .pairMatcher(new ConsecutivePairMatcher())
                 .crosser(new OnePointSplitCrosser(gameVariant, 0.9))
+                .shouldMutateSurvivors(false)
                 .mutator(new ValueShiftMutator(gameVariant, 0.01))
                 .build();
         var evo = new EvoAlgorithm(config);

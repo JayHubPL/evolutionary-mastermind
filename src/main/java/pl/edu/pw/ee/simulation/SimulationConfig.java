@@ -19,6 +19,7 @@ public class SimulationConfig {
     Code initialGuess;
     Code secretCode;
     boolean initialPopulationDuplicatesAllowed;
+    boolean shouldMutateSurvivors;
     double mutationChance;
     double crossingProbability;
     Scaler scaler;

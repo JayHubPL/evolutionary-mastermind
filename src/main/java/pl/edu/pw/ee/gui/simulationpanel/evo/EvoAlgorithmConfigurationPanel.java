@@ -32,6 +32,7 @@ public class EvoAlgorithmConfigurationPanel extends JPanel implements ItemListen
     private final ComboBoxWithLabel<String> pairMatcherComboBoxWithLabel;
     private final ComboBoxWithLabel<String> scalerComboBoxWithLabel;
     private final SpinnerWithLabel mutationChanceSpinnerWithLabel;
+    private final CheckBoxWithLabel shouldMutateSurvivorsCheckBoxWithLabel;
     private final SpinnerWithLabel crossingProbabilitySpinnerWithLabel;
 
     // Optional parameter inputs
@@ -60,6 +61,7 @@ public class EvoAlgorithmConfigurationPanel extends JPanel implements ItemListen
         )));
         pairMatcherComboBoxWithLabel.addItemListener(this);
         mutationChanceSpinnerWithLabel = new SpinnerWithLabel("Prawdopodobieństwo mutacji", new SpinnerNumberModel(0.01, 0.0, 1.0, 0.001));
+        shouldMutateSurvivorsCheckBoxWithLabel = new CheckBoxWithLabel("Mutacja starszych osobników", false);
 
         multiplicationFactorSpinnerWithLabel = new SpinnerWithLabel("Współczynnik zwielokrotnienia", new SpinnerNumberModel(2., 0., 3., 0.01));
         multiplicationFactorSpinnerWithLabel.setVisible(false);
@@ -78,6 +80,7 @@ public class EvoAlgorithmConfigurationPanel extends JPanel implements ItemListen
         add(pairMatcherComboBoxWithLabel);
         add(pairMatcherRepetitionsAllowedCheckBoxWithLabel);
         add(mutationChanceSpinnerWithLabel);
+        add(shouldMutateSurvivorsCheckBoxWithLabel);
     }
 
     @Override
@@ -110,6 +113,10 @@ public class EvoAlgorithmConfigurationPanel extends JPanel implements ItemListen
 
     public double getMutationChance() {
         return (double) mutationChanceSpinnerWithLabel.getValue();
+    }
+
+    public boolean getShouldMutateSurvivors() {
+        return shouldMutateSurvivorsCheckBoxWithLabel.isSelected();
     }
 
     public double getCrossingProbability() {

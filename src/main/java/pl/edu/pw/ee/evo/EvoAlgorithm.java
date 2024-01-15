@@ -5,9 +5,7 @@ import pl.edu.pw.ee.game.CodeBreaker;
 import pl.edu.pw.ee.game.MastermindGame;
 
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class EvoAlgorithm implements CodeBreaker {
 
@@ -33,18 +31,22 @@ public class EvoAlgorithm implements CodeBreaker {
         // select
         var selected = config.getSelector().select(population);
         // crossover
-        var parents = config.getPairMatcher().pair(selected);
-        var offsprings = parents.stream()
-                .map(pair -> config.getCrosser().cross(pair))
-                .flatMap(List::stream)
-                .collect(Collectors.toCollection(LinkedList::new));
+        var pairs = config.getPairMatcher().pair(selected);
+        var crossoverResults = config.getCrosser().cross(pairs);
+        var offsprings = crossoverResults.getOffsprings();
+        var survivors = crossoverResults.getNonCrossedSpecimens();
         // mutate
+        if (config.isShouldMutateSurvivors()) {
+            survivors.forEach(specimen -> config.getMutator().mutate(specimen));
+        }
         offsprings.forEach(offspring -> config.getMutator().mutate(offspring));
         // if population size should be odd, add first specimen from selected
-        if (offsprings.size() != population.size()) {
-            offsprings.add(selected.get(0));
+        if (crossoverResults.getSpecimenCount() != population.size()) {
+            survivors.add(selected.get(0));
         }
-        population = offsprings;
+        population.clear();
+        population.addAll(offsprings);
+        population.addAll(survivors);
         // evaluate
         config.getEvaluator().evaluate(population, gameState);
         population.sort(Comparator.comparing(Specimen::getFitness).reversed());

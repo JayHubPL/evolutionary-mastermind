@@ -18,6 +18,7 @@ public class EvoAlgorithmConfig {
     int populationSize;
     Code initialGuess;
     boolean initialPopulationDuplicatesAllowed;
+    boolean shouldMutateSurvivors;
     GameVariant gameVariant;
 
     PopulationGenerator populationGenerator;
