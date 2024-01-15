@@ -7,7 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
@@ -17,9 +19,13 @@ public class ResourceUtils {
 
     @SneakyThrows
     public static String readResourceFile(String resourceName) {
-        var uri = getResourceURL(resourceName).toURI();
-        try (BufferedReader reader = new BufferedReader(new java.io.FileReader(new File(uri)))) {
-            return reader.lines().collect(Collectors.joining(System.lineSeparator()));
+        try (var inputStream = ResourceUtils.class.getClassLoader().getResourceAsStream(resourceName)) {
+            if (inputStream == null) {
+                throw new FileNotFoundException("Resource with name " + resourceName + " not found");
+            }
+            try (var reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                return reader.lines().collect(Collectors.joining(System.lineSeparator()));
+            }
         }
     }
 
