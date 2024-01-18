@@ -34,7 +34,7 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
         setLayout(new GridBagLayout());
         setBorder(new TitledBorder("Wyniki symulacji"));
 
-        averageGuessCountValueWithLabel = new ValueWithLabel("Średnia liczba prób");
+        averageGuessCountValueWithLabel = ValueWithLabel.ofTextValue("Średnia liczba prób");
         maxGuessCountValueWithLabel = new ValueWithLabel("Maksymalna liczba prób");
         var percentFormatter = NumberFormat.getPercentInstance();
         percentFormatter.setMaximumFractionDigits(2);
@@ -75,7 +75,7 @@ public class SimulationResultsPanel extends JPanel implements ProgressListener, 
         lastSimulationResults = results;
         var numberOfSimulations = lastSimulationResults.getIndividualGameResults().size();
 
-        averageGuessCountValueWithLabel.setValue(lastSimulationResults.getAverageGuessCount());
+        averageGuessCountValueWithLabel.setValue(String.format("%.2f±%.2f",lastSimulationResults.getAverageGuessCount(), lastSimulationResults.getUncertainty()));
         maxGuessCountValueWithLabel.setValue(lastSimulationResults.getMaxGuessCount());
         winPercentageValueWithLabel.setValue((double) lastSimulationResults.getNumberOfWins() / numberOfSimulations);
         numberOfWinsValueWithLabel.setValue(lastSimulationResults.getNumberOfWins());

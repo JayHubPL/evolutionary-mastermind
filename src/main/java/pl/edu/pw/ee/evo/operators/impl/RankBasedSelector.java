@@ -2,6 +2,7 @@ package pl.edu.pw.ee.evo.operators.impl;
 
 import pl.edu.pw.ee.evo.Specimen;
 import pl.edu.pw.ee.evo.operators.Selector;
+import pl.edu.pw.ee.utils.StatisticsUtils;
 
 import java.util.Comparator;
 import java.util.List;
@@ -19,14 +20,14 @@ public class RankBasedSelector implements Selector {
         var probabilities = IntStream.range(1, numberOfRanks + 1)
                 .mapToObj(rank -> 1. - (rank + 1) / rankSum)
                 .toList();
-        cumulativeDistribution = ProbabilityUtils.calculateCumulativeDistribution(probabilities);
+        cumulativeDistribution = StatisticsUtils.calculateCumulativeDistribution(probabilities);
     }
 
     @Override
     public List<Specimen> select(List<Specimen> population) {
         population.sort(Comparator.comparing(Specimen::getFitness).reversed());
         return random.doubles(population.size())
-                .mapToObj(p -> ProbabilityUtils.randomize(population, cumulativeDistribution, p))
+                .mapToObj(p -> StatisticsUtils.randomize(population, cumulativeDistribution, p))
                 .collect(Collectors.toList());
     }
 

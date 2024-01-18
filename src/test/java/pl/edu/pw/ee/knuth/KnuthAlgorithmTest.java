@@ -9,6 +9,7 @@ import pl.edu.pw.ee.game.Color;
 import pl.edu.pw.ee.game.GameVariant;
 import pl.edu.pw.ee.game.MastermindGame;
 import pl.edu.pw.ee.utils.CodePoolGenerator;
+import pl.edu.pw.ee.utils.StatisticsUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,18 +85,6 @@ public class KnuthAlgorithmTest {
         executor.shutdown();
     }
 
-    private static double calculateMarginOfError(List<Integer> values, double mean) {
-        return 1.96 * (calculateStandardDeviation(values, mean) / Math.sqrt(values.size()));
-    }
-
-    private static double calculateStandardDeviation(List<Integer> values, double mean) {
-        var sumSquaredDiff = values.stream()
-                .mapToDouble(num -> Math.pow(num - mean, 2))
-                .sum();
-        var variance = sumSquaredDiff / values.size();
-        return Math.sqrt(variance);
-    }
-
     @AllArgsConstructor(staticName = "of")
     static class Statistics {
 
@@ -114,12 +103,12 @@ public class KnuthAlgorithmTest {
 
         public void summary() {
             var mean = guessCounts.stream().mapToInt(Integer::intValue).average().orElse(.0);
-            var marginOfError = calculateMarginOfError(guessCounts, mean);
+            var uncertainty = StatisticsUtils.calculateUncertainty(guessCounts, mean);
             var guessCountsGrouped = new HashMap<Integer, Integer>();
             guessCounts.forEach(guessCount -> guessCountsGrouped.put(guessCount, guessCountsGrouped.getOrDefault(guessCount, 0) + 1));
 
             System.out.printf("Total simulation time: %.2f sec%n", simulationTime / 1000.);
-            System.out.printf("Confidence interval: %.3f±%.5f%n", mean, marginOfError);
+            System.out.printf("Confidence interval: %.3f±%.5f%n", mean, uncertainty);
             System.out.println("Guess counts:");
             IntStream.rangeClosed(1, 12)
                     .forEach(i -> System.out.printf("%d: %s%n", i, Objects.toString(guessCountsGrouped.get(i), "0")));

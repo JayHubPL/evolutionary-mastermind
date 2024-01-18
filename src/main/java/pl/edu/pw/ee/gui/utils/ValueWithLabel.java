@@ -15,7 +15,7 @@ public class ValueWithLabel extends JPanel {
     }
 
     private ValueWithLabel(String text, Format format, Object initialValue) {
-        this(text, new JFormattedTextField(format), initialValue);
+        this(text, format == null ? new JFormattedTextField() : new JFormattedTextField(format), initialValue);
     }
 
     private ValueWithLabel(String text, JFormattedTextField formattedTextField, Object initialValue) {
@@ -63,6 +63,10 @@ public class ValueWithLabel extends JPanel {
 
     public ValueWithLabel(String text) {
         this(text, NumberFormat.getNumberInstance());
+    }
+
+    public static ValueWithLabel ofTextValue(String text) {
+        return new ValueWithLabel(text, (Format) null, null);
     }
 
     public void setValue(Object value) {

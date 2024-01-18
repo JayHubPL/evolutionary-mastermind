@@ -2,9 +2,11 @@ package pl.edu.pw.ee.simulation;
 
 import lombok.Value;
 import pl.edu.pw.ee.game.GameResults;
+import pl.edu.pw.ee.utils.StatisticsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Value
 public class SimulationResults {
@@ -14,6 +16,7 @@ public class SimulationResults {
     int numberOfWins;
     int numberOfFails;
     double averageGuessCount;
+    double uncertainty;
     int maxGuessCount;
     long time;
 
@@ -24,9 +27,13 @@ public class SimulationResults {
                 .filter(gr -> gr.getGameState() == GameResults.GameState.GUESSED_SECRET_CODE)
                 .count();
         numberOfFails = gameResults.size() - numberOfWins;
-        averageGuessCount = gameResults.stream()
-                .mapToInt(GameResults::getNumberOfAttempts)
+        var guessCounts = gameResults.stream()
+                .map(GameResults::getNumberOfAttempts)
+                .collect(Collectors.toList());
+        averageGuessCount = guessCounts.stream()
+                .mapToInt(Integer::intValue)
                 .average().orElse(0.0);
+        uncertainty = StatisticsUtils.calculateUncertainty(guessCounts, averageGuessCount);
         maxGuessCount = gameResults.stream()
                 .mapToInt(GameResults::getNumberOfAttempts)
                 .max().orElse(-1);

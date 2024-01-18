@@ -1,9 +1,9 @@
-package pl.edu.pw.ee.evo.operators.impl;
+package pl.edu.pw.ee.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProbabilityUtils {
+public class StatisticsUtils {
 
     public static List<Double> calculateCumulativeDistribution(List<Double> probabilities) {
         var cumulativeDistribution = new ArrayList<Double>(probabilities.size());
@@ -30,6 +30,18 @@ public class ProbabilityUtils {
             }
         }
         return left;
+    }
+
+    public static double calculateUncertainty(List<Integer> values, double mean) {
+        return 1.96 * (calculateStandardDeviation(values, mean) / Math.sqrt(values.size()));
+    }
+
+    private static double calculateStandardDeviation(List<Integer> values, double mean) {
+        var sumSquaredDiff = values.stream()
+                .mapToDouble(num -> Math.pow(num - mean, 2))
+                .sum();
+        var variance = sumSquaredDiff / values.size();
+        return Math.sqrt(variance);
     }
 
 }

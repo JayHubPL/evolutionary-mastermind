@@ -2,6 +2,7 @@ package pl.edu.pw.ee.evo.operators.impl;
 
 import pl.edu.pw.ee.evo.Specimen;
 import pl.edu.pw.ee.evo.operators.Selector;
+import pl.edu.pw.ee.utils.StatisticsUtils;
 
 import java.util.List;
 import java.util.Random;
@@ -20,9 +21,9 @@ public class UnbalancedRouletteSelector implements Selector {
         var probabilities = population.stream()
                 .map(specimen -> specimen.getFitness() / totalFitness)
                 .toList();
-        var cumulativeDistribution = ProbabilityUtils.calculateCumulativeDistribution(probabilities);
+        var cumulativeDistribution = StatisticsUtils.calculateCumulativeDistribution(probabilities);
         return random.doubles(population.size())
-                .mapToObj(p -> ProbabilityUtils.randomize(population, cumulativeDistribution, p))
+                .mapToObj(p -> StatisticsUtils.randomize(population, cumulativeDistribution, p))
                 .collect(Collectors.toList());
     }
 
