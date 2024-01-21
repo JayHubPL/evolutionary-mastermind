@@ -1,7 +1,6 @@
 package pl.edu.pw.ee.gui.simulationpanel.shared;
 
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import pl.edu.pw.ee.gui.utils.GuiUtils;
 import pl.edu.pw.ee.gui.utils.ProgressListener;
 import pl.edu.pw.ee.gui.utils.SpinnerWithLabel;
@@ -14,9 +13,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.util.concurrent.CancellationException;
 
-@Slf4j
 public class SimulatorConfigurationPanel extends JPanel implements ProgressListener {
 
     private static final String startIconResourceName = "icons/start.png";
@@ -79,10 +76,7 @@ public class SimulatorConfigurationPanel extends JPanel implements ProgressListe
 
     public void terminateSimulation() {
         if (simulationRunner != null) {
-            try {
-                simulationRunner.cancel(true);
-            } catch (CancellationException ignored) {
-            }
+            simulationRunner.cancelSimulation();
         }
     }
 
