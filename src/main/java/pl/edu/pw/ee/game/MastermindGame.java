@@ -45,10 +45,10 @@ public class MastermindGame {
             makeGuess();
         }
         GameResults.GameState gameState = GameResults.GameState.NOT_FINISHED;
-        if (guessesLimitReached) {
-            gameState = GameResults.GameState.GUESS_LIMIT_REACHED;
-        } else if (codeBreakerWon) {
+        if (codeBreakerWon) {
             gameState = GameResults.GameState.GUESSED_SECRET_CODE;
+        } else if (guessesLimitReached) {
+            gameState = GameResults.GameState.GUESS_LIMIT_REACHED;
         }
         return GameResults.builder()
                 .attemptHistory(previousAttempts)
