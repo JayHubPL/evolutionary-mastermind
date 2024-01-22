@@ -85,6 +85,7 @@
               <outfile>target/${project.name}.exe</outfile>
               <jar>target/${project.name}-${project.version}.jar</jar>
               <errTitle>${project.name} - Error</errTitle>
+              <icon>target/classes/icons/program_icon.ico</icon>
               <classPath>
                 <mainClass>pl.edu.pw.ee.gui.MainFrame</mainClass>
                 <addDependencies>true</addDependencies>

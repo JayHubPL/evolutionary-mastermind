@@ -29,7 +29,7 @@ public class ResourceUtils {
         }
     }
 
-    public static Icon getIcon(String resourceName, int size) {
+    public static ImageIcon getIcon(String resourceName, int size) {
         var icon = new ImageIcon(ResourceUtils.getResourceURL(resourceName));
         return new ImageIcon(icon.getImage().getScaledInstance(size, size, Image.SCALE_SMOOTH));
     }

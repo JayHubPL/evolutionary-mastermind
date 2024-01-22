@@ -8,12 +8,14 @@ import pl.edu.pw.ee.gui.gamepanel.RulesPanel;
 import pl.edu.pw.ee.gui.simulationpanel.evo.EvoSimulationPanel;
 import pl.edu.pw.ee.gui.simulationpanel.knuth.KnuthSimulationPanel;
 import pl.edu.pw.ee.gui.utils.NonClosingCheckBoxMenuItem;
+import pl.edu.pw.ee.utils.ResourceUtils;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
 
+    private static final String programIconResourceName = "icons/program_icon.png";
     private final MainPanel mainPanel;
     private final NonClosingCheckBoxMenuItem duplicatesAllowedCheckboxMenuItem;
 
@@ -23,6 +25,7 @@ public class MainFrame extends JFrame {
 
         setName("Evolutionary Mastermind");
         setTitle("Evolutionary Mastermind");
+        setIconImage(ResourceUtils.getIcon(programIconResourceName, 40).getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
