@@ -91,6 +91,10 @@
                 <addDependencies>true</addDependencies>
                 <preCp>anything</preCp>
               </classPath>
+              <versionInfo>
+                <fileDescription>Symulator do algorytmu ewolucyjnego dla gry Mastermind</fileDescription>
+                <language>POLISH</language>
+              </versionInfo>
               <jre>
                 <path>%JAVA_HOME%</path>
                 <minVersion>18</minVersion>
